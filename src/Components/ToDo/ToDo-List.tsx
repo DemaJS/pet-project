@@ -4,6 +4,7 @@ import {Button, ButtonGroup, Checkbox, IconButton, Paper, TextField} from "@mate
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import {Delete} from "@material-ui/icons";
 import {EditableSpan} from "./Editable-Span";
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 type propsType = {
     tasks: Array<taskType>
@@ -14,6 +15,7 @@ type propsType = {
     filterTask: (todoID: string, filter: filterType) => void
     changeCheckBox: (todoID: string, taskID: string, isDone: boolean) => void
     changeTaskName: (todoID: string, taskID: string, taskName: string) => void
+    deleteToDo:(id:string) => void
 }
 
 const ToDoList = (props: propsType) => {
@@ -35,7 +37,12 @@ const ToDoList = (props: propsType) => {
     return (
         <Paper style={{padding:'10px'}} elevation={3}>
 
-            <h3>{props.title}</h3>
+            <h3>
+                {props.title}
+                <IconButton onClick={() => props.deleteToDo(props.id)}>
+                    <HighlightOffIcon/>
+                </IconButton>
+            </h3>
 
             <TextField
                 error={!!error}
@@ -46,7 +53,7 @@ const ToDoList = (props: propsType) => {
                 helperText={error}
             />
 
-            <IconButton aria-label="delete" onClick={onAddTask}>
+            <IconButton onClick={onAddTask}>
                 <PlaylistAddIcon/>
             </IconButton>
 

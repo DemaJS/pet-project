@@ -48,6 +48,11 @@ function ToDo() {
         setTasks({...tasks, [toDoID]: []})
     }
 
+    const deleteToDo = (id: string) => {
+        let newArray = todoLists.filter(el => el.id !== id)
+        setTodoLists(newArray)
+    }
+
     const addTask = (todoID: string, taskName: string) => {
         tasks[todoID] = [{id: v1(), title: taskName, isDone: false}, ...tasks[todoID]]
         setTasks({...tasks})
@@ -80,8 +85,8 @@ function ToDo() {
     }
 
     return (
-        <Container>
 
+        <>
             <Grid container>
                 <MultiInput addToDo={addToDo}/>
             </Grid>
@@ -109,6 +114,7 @@ function ToDo() {
                                         filterTask={filterTask}
                                         changeCheckBox={changeCheckBox}
                                         changeTaskName={changeTaskName}
+                                        deleteToDo={deleteToDo}
                                     />
                                 </Grid>
                             )
@@ -116,7 +122,7 @@ function ToDo() {
                     )
                 }
             </Grid>
-        </Container>
+        </>
     )
 }
 

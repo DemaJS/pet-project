@@ -7,7 +7,7 @@ type propsType = {
 
 export const EditableSpan = (props:propsType) => {
     const [editMode, setEditMode] = useState(true)
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState(props.value)
 
     const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
@@ -21,8 +21,8 @@ export const EditableSpan = (props:propsType) => {
         <>
             {
                 editMode
-                    ? <span onClick={() => setEditMode(false)}>{props.value}</span>
-                    : <input value = {title} onChange={onChangeHandler} onBlur={onBlueHandler} />
+                    ? <span onDoubleClick={() => setEditMode(false)}>{props.value}</span>
+                    : <input value = {title} autoFocus onChange={onChangeHandler} onBlur={onBlueHandler} />
             }
 
         </>
