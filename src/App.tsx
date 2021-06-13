@@ -16,6 +16,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import {NavLink, Route} from 'react-router-dom';
 import {Counter} from "./Components/Counter/Counter";
+import ToDo from "./Components/ToDo/ToDo";
 
 const drawerWidth = 240;
 
@@ -104,6 +105,7 @@ export default function App() {
             <main className={classes.content}>
                 <Toolbar/>
                 <Route path="/counter" render={() => <Counter/>}/>
+                <Route path="/todo" render={() => <ToDo/>}/>
             </main>
         </div>
     );
