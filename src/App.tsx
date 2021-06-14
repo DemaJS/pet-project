@@ -18,6 +18,9 @@ import {NavLink, Route} from 'react-router-dom';
 import {Counter} from "./Components/Counter/Counter";
 import ToDo from "./Components/ToDo/ToDo";
 import {Profile} from "./Components/Profile/Profile";
+import {Users} from "./Components/Users/Users";
+import {Button} from "@material-ui/core";
+import LockOpenIcon from '@material-ui/icons/LockOpen';
 
 const drawerWidth = 240;
 
@@ -43,6 +46,9 @@ const useStyles = makeStyles((theme: Theme) =>
             flexGrow: 1,
             padding: theme.spacing(3),
         },
+        button: {
+            margin: theme.spacing(1),
+        }
     }),
 );
 
@@ -54,9 +60,14 @@ export default function App() {
             <CssBaseline/>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                    <Typography variant="h6" noWrap>
-                        Project
-                    </Typography>
+                    <Button
+                        variant="outlined"
+                        color="default"
+                        className={classes.button}
+                        startIcon={<LockOpenIcon />}
+                    >
+                        Log in
+                    </Button>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -108,7 +119,8 @@ export default function App() {
                 <Route path="/counter" render={() => <Counter/>}/>
                 <Route path="/todo" render={() => <ToDo/>}/>
                 <Route path="/profile" render={() => <Profile/>}/>
+                <Route path="/users" render={() => <Users/>}/>
             </main>
         </div>
-    );
+    )
 }

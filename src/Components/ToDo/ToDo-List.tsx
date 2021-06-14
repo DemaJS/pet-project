@@ -45,6 +45,7 @@ const ToDoList = (props: propsType) => {
             </h3>
 
             <TextField
+                size='small'
                 error={!!error}
                 label="Add task"
                 variant="outlined"
