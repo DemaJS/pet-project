@@ -1,5 +1,5 @@
 import React from "react";
-import {Checkbox, Divider, Grid, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {Checkbox, Divider, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import InstagramIcon from "@material-ui/icons/Instagram";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import FacebookIcon from "@material-ui/icons/Facebook";
@@ -9,9 +9,9 @@ import CodeIcon from '@material-ui/icons/Code';
 export function Description() {
 
     return (
-        <Grid container spacing={1}>
-            <Grid item>
-                About me:
+        <List dense={true}>
+        <ListItem>
+
                 <List dense={true}>
                     <ListItem>
                         <ListItemIcon>
@@ -35,10 +35,10 @@ export function Description() {
                         </List>
                     </ListItem>
                 </List>
-            </Grid>
+        </ListItem>
 
-            <Grid item>
-                Contacts:
+        <ListItem>
+
                 <List dense={true}>
                     <ListItem>
                         <ListItemIcon>
@@ -59,9 +59,8 @@ export function Description() {
                         <ListItemText primary="https:"/>
                     </ListItem>
                 </List>
-            </Grid>
+        </ListItem>
 
-
-        </Grid>
+        </List>
     )
 }

@@ -18,8 +18,6 @@ import {Counter} from "./Components/Counter/Counter";
 import ToDo from "./Components/ToDo/ToDo";
 import {Profile} from "./Components/Profile/Profile";
 import {Users} from "./Components/Users/Users";
-import {Button} from "@material-ui/core";
-import LockOpenIcon from '@material-ui/icons/LockOpen';
 import FormDialog from "./Components/Login/Login";
 
 const drawerWidth = 240;
