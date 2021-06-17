@@ -5,7 +5,6 @@ import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -21,6 +20,7 @@ import {Profile} from "./Components/Profile/Profile";
 import {Users} from "./Components/Users/Users";
 import {Button} from "@material-ui/core";
 import LockOpenIcon from '@material-ui/icons/LockOpen';
+import FormDialog from "./Components/Login/Login";
 
 const drawerWidth = 240;
 
@@ -60,14 +60,7 @@ export default function App() {
             <CssBaseline/>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                    <Button
-                        variant="outlined"
-                        color="default"
-                        className={classes.button}
-                        startIcon={<LockOpenIcon />}
-                    >
-                        Log in
-                    </Button>
+                    <FormDialog/>
                 </Toolbar>
             </AppBar>
             <Drawer
