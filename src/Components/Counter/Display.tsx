@@ -8,12 +8,16 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import AddIcon from '@material-ui/icons/Add';
 import RotateLeftIcon from '@material-ui/icons/RotateLeft';
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../State/Store";
+import {incValueAC, resetValueAC} from "../../Reducers/Counter-reducer";
+
 
 type propsType = {
     number: number
-    setNumber:(number:number) => void
-    maxValue:number
-    setMaxValue:(number:number) => void
+    setNumber: (number: number) => void
+    maxValue: number
+    setMaxValue: (number: number) => void
 }
 
 const useStyles = makeStyles({
@@ -27,39 +31,46 @@ const useStyles = makeStyles({
 
 export function Display(props: propsType) {
 
-    useEffect(() => {
+    const value = useSelector<AppStateType, number>((state) => state.counter.value)
+    const maxValue = useSelector<AppStateType,number>((state => state.counter.maxValue))
+    const dispatch = useDispatch()
+
+    /*useEffect(() => {
         let maxValue = localStorage.getItem('maxValueKey')
-        if(maxValue) {
+        if (maxValue) {
             let maxValueAsNumber = JSON.parse(maxValue)
             props.setMaxValue(maxValueAsNumber)
         }
-    },[props.maxValue])
+    }, [props.maxValue])*/
 
     const classes = useStyles();
 
-    const style:any = {
+    const style: any = {
         color: 'red',
         textAlign: 'center'
     }
 
 
     const onClickHandler = () => {
-        if (props.number !== props.maxValue) {
-            props.setNumber(props.number + 1)
+
+        if (value !== maxValue) {
+            dispatch(incValueAC())
+            /*props.setNumber(props.number + 1)*/
         }
     }
     const resetOnClick = () => {
-        props.setNumber(0)
+        dispatch(resetValueAC())
+        /*props.setNumber(0)*/
     }
 
     return (
-        <Card className={classes.root} >
+        <Card className={classes.root}>
             <CardActionArea>
                 <CardContent>
                     <Typography variant='h3'>
                         {
-                            props.number >= props.maxValue ? <h1 style={style}>{props.number}</h1> :
-                                <h1 style={{textAlign: 'center'}}>{props.number}</h1>
+                            value >= maxValue ? <h1 style={style}>{value}</h1> :
+                                <h1 style={{textAlign: 'center'}}>{value}</h1>
                         }
                     </Typography>
                 </CardContent>

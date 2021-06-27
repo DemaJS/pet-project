@@ -7,6 +7,8 @@ import React, {useEffect, useState} from "react";
 import {makeStyles} from "@material-ui/core/styles";
 import {InputComponent} from "./InputComponent";
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
+import {useDispatch} from "react-redux";
+import {setMaxValueAC, setStartValueAC, setValueAC} from "../../Reducers/Counter-reducer";
 
 
 const useStyles = makeStyles({
@@ -29,10 +31,12 @@ export function DisplayWithInput(props: propsType) {
 
     const classes = useStyles();
 
-    const [maxValue, setMaxValue] = useState(0)
-    const [startValue, setStartValue] = useState(0)
+    const dispatch = useDispatch()
 
-    useEffect(() => {
+   /* const [maxValue, setMaxValue] = useState(0)
+    const [startValue, setStartValue] = useState(0)*/
+
+    /*useEffect(() => {
         let startValue = localStorage.getItem('startValueKey')
         let maxValue = localStorage.getItem('maxValueKey')
         if (maxValue && startValue) {
@@ -46,19 +50,29 @@ export function DisplayWithInput(props: propsType) {
     useEffect(() => {
         localStorage.setItem('maxValueKey', JSON.stringify(maxValue))
         localStorage.setItem('startValueKey', JSON.stringify(startValue))
-    }, [maxValue, startValue])
+    }, [maxValue, startValue])*/
 
 
     const onSetValuesFromStorage = () => {
-        let startValue = localStorage.getItem('startValueKey')
-        if (startValue) {
-            let valueAsNumber = JSON.parse(startValue)
-            props.setNumber(valueAsNumber)
+
+        let value = localStorage.getItem('startValue')
+        if(value) {
+            let valueAsNumber = JSON.parse(value)
+            dispatch(setValueAC(valueAsNumber))
         }
-        let maxValue = localStorage.getItem('maxValueKey')
+
+        let startValue = localStorage.getItem('startValue')
+        if (startValue) {
+            let startValueAsNumber = JSON.parse(startValue)
+            /*props.setNumber(valueAsNumber)*/
+            dispatch(setStartValueAC(startValueAsNumber))
+        }
+
+        let maxValue = localStorage.getItem('maxValue')
         if(maxValue) {
             let maxValueAsNumber = JSON.parse(maxValue)
-            props.setMaxValue(maxValueAsNumber)
+          /*  props.setMaxValue(maxValueAsNumber)*/
+            dispatch(setMaxValueAC(maxValueAsNumber))
         }
     }
 
@@ -66,8 +80,7 @@ export function DisplayWithInput(props: propsType) {
         <Card className={classes.root}>
            <Typography variant='h3'>Counter</Typography>
             <CardContent>
-                <InputComponent maxValue={maxValue} startValue={startValue}
-                                setMaxValue={setMaxValue} setStartValue={setStartValue}/>
+                <InputComponent />
             </CardContent>
             <CardActions>
                 <Button

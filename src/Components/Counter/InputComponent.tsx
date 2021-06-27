@@ -1,20 +1,29 @@
 import React, {ChangeEvent} from 'react'
 import {TextField} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../State/Store";
+import {setMaxValueAC, setStartValueAC} from "../../Reducers/Counter-reducer";
 
-type propsType = {
+/*type propsType = {
     setMaxValue:(maxValue:number)=>void
     setStartValue:(startValue:number)=>void
     maxValue:number
     startValue:number
-}
+}*/
 
-export function InputComponent(props:propsType) {
+export function InputComponent() {
+
+    const startValue = useSelector<AppStateType,number>((state => state.counter.startValue))
+    const maxValue = useSelector<AppStateType,number>((state => state.counter.maxValue))
+    const dispatch = useDispatch()
 
     const onChangeMaxValue = (e:ChangeEvent<HTMLInputElement>) => {
-        props.setMaxValue(parseFloat(e.currentTarget.value) )
+        dispatch(setMaxValueAC(parseFloat(e.currentTarget.value)))
+       /* props.setMaxValue(parseFloat(e.currentTarget.value) )*/
     }
     const onChangeStartValue = (e:ChangeEvent<HTMLInputElement>) => {
-        props.setStartValue(parseFloat(e.currentTarget.value) )
+        dispatch(setStartValueAC(parseFloat(e.currentTarget.value)))
+       /* props.setStartValue(parseFloat(e.currentTarget.value) )*/
     }
 
     return (
@@ -28,7 +37,8 @@ export function InputComponent(props:propsType) {
                 }}
                 variant="outlined"
                 onChange={onChangeMaxValue}
-                value={props.maxValue}
+                /*value={props.maxValue}*/
+                value={maxValue}
             />
             <TextField
                 style={{marginTop: '10px'}}
@@ -40,7 +50,8 @@ export function InputComponent(props:propsType) {
                 }}
                 variant="outlined"
                 onChange={onChangeStartValue}
-                value={props.startValue}
+                /*value={props.startValue}*/
+                value={startValue}
             />
         </>
     )
