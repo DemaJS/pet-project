@@ -38,7 +38,7 @@ const ToDoList = (props: propsType) => {
         <Paper style={{padding:'10px'}} elevation={3}>
 
             <h3>
-                {props.title}
+                {props.title ? `${props.title}` : 'ToDo'}
                 <IconButton onClick={() => props.deleteToDo(props.id)}>
                     <HighlightOffIcon/>
                 </IconButton>

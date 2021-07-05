@@ -1,8 +1,11 @@
-import React, {useState} from 'react'
-import {v1} from "uuid";
+import React from 'react'
 import {MultiInput} from "./Multi-Input";
 import ToDoList from "./ToDo-List";
 import {Grid} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "../../State/Store";
+import {addToDoAC, deleteToDoAC, filterTaskAC} from "../../Reducers/ToDoLists-Reducer";
+import {addTaskAC, changeCheckBoxAC, changeTaskNameAC, deleteTaskAC} from "../../Reducers/ToDoTasks-Reducer";
 
 export type todoListsType = {
     id: string
@@ -22,66 +25,34 @@ export type filterType = 'all' | 'active' | 'completed'
 
 function ToDo() {
 
-    const taskID1 = v1()
-    const taskID2 = v1()
 
-    const [todoLists, setTodoLists] = useState<Array<todoListsType>>([
-        {id: taskID1, title: 'Shopping', filter: 'all'},
-        {id: taskID2, title: 'Skills', filter: 'all'},
-    ])
-
-    const [tasks, setTasks] = useState<tasksType>({
-        [taskID1]: [
-            {id: v1(), title: 'Notebook', isDone: false},
-            {id: v1(), title: 'Mazda', isDone: false}
-        ],
-        [taskID2]: [
-            {id: v1(), title: 'React', isDone: false},
-            {id: v1(), title: 'JS', isDone: false}
-        ]
-    })
+    const todoLists = useSelector<AppStateType,Array<todoListsType>>(state => state.lists)
+    const tasks = useSelector<AppStateType,tasksType>(state => state.tasks)
+    const dispatch = useDispatch()
 
     const addToDo = (title: string) => {
-        let toDoID = v1()
-        let newToDo = {id: toDoID, title: title, filter: 'all'}
-        setTodoLists([newToDo, ...todoLists])
-        setTasks({...tasks, [toDoID]: []})
+        let action = addToDoAC(title)
+        dispatch(action)
     }
 
     const deleteToDo = (id: string) => {
-        let newArray = todoLists.filter(el => el.id !== id)
-        setTodoLists(newArray)
+        dispatch(deleteToDoAC(id))
     }
 
     const addTask = (todoID: string, taskName: string) => {
-        tasks[todoID] = [{id: v1(), title: taskName, isDone: false}, ...tasks[todoID]]
-        setTasks({...tasks})
+        dispatch(addTaskAC(todoID,taskName))
     }
     const deleteTask = (todoID: string, taskID: string) => {
-        const newTasks = tasks[todoID]
-        tasks[todoID] = newTasks.filter(el => el.id !== taskID)
-        setTasks({...tasks})
+        dispatch(deleteTaskAC(todoID,taskID))
     }
     const filterTask = (todoID: string, filter: filterType) => {
-        let filterTodoLists = todoLists.find(el => el.id === todoID)
-        if (filterTodoLists) {
-            filterTodoLists.filter = filter
-        }
-        setTodoLists([...todoLists])
+        dispatch(filterTaskAC(todoID,filter))
     }
     const changeCheckBox = (todoID: string, taskID: string, isDone: boolean) => {
-        let task = tasks[todoID].find(el => el.id === taskID)
-        if (task) {
-            task.isDone = isDone
-        }
-        setTasks({...tasks})
+        dispatch(changeCheckBoxAC(todoID,taskID,isDone))
     }
     const changeTaskName = (todoID: string, taskID: string, taskName: string) => {
-        let task = tasks[todoID].find(el => el.id === taskID)
-        if (task) {
-            task.title = taskName
-        }
-        setTasks({...tasks})
+        dispatch(changeTaskNameAC(todoID,taskID,taskName))
     }
 
     return (
