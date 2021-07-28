@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useCallback, useState} from "react";
 import {filterType, taskType} from "./ToDo";
 import {Button, ButtonGroup, Checkbox, IconButton, Paper, TextField} from "@material-ui/core";
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
@@ -7,6 +7,7 @@ import {EditableSpan} from "./Editable-Span";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 type propsType = {
+    filter:filterType
     tasks: Array<taskType>
     title: string
     id: string
@@ -18,21 +19,33 @@ type propsType = {
     deleteToDo:(id:string) => void
 }
 
-const ToDoList = (props: propsType) => {
+const ToDoList = React.memo((props: propsType) => {
+
+    console.log('TODO')
 
     const [taskName, setTaskName] = useState('')
     const [error, setError] = useState('')
 
-    const onAddTask = () => {
+    const onAddTask = useCallback(() => {
         if (taskName.trim() !== '') {
             props.addTask(props.id, taskName)
             setTaskName('')
             setError('')
         } else setError('Incorrect entry.')
-    }
+    },[ props.addTask,props.id,taskName])
+
     const taskOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTaskName(e.currentTarget.value)
     }
+
+ /*   let filterTasks = props.tasks
+    if (props.filter === 'active') {
+        filterTasks = filterTasks.filter(t => !t.isDone)
+    }
+    if (props.filter === 'completed') {
+        filterTasks = filterTasks.filter(t => t.isDone)
+    }*/
+
 
     return (
         <Paper style={{padding:'10px'}} elevation={3}>
@@ -58,8 +71,8 @@ const ToDoList = (props: propsType) => {
                 <PlaylistAddIcon/>
             </IconButton>
 
-            {
-                props.tasks.map(el => {
+            {/*{
+                filterTasks.map(el => {
 
                     let onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
                         props.changeCheckBox(props.id, el.id, e.currentTarget.checked)
@@ -83,7 +96,7 @@ const ToDoList = (props: propsType) => {
                         </div>
                     )
                 })
-            }
+            }*/}
             <div>
                 <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
                     <Button onClick={() => props.filterTask(props.id, 'all')}>All</Button>
@@ -93,6 +106,6 @@ const ToDoList = (props: propsType) => {
             </div>
         </Paper>
     )
-}
+})
 
 export default ToDoList

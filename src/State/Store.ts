@@ -1,17 +1,20 @@
-import {combineReducers, createStore} from "redux";
+import {applyMiddleware, combineReducers, createStore} from "redux";
 import {counterReducer} from "../Reducers/Counter-reducer";
 import {ToDoListsReducer} from "../Reducers/ToDoLists-Reducer";
 import {ToDoTaskReducer} from "../Reducers/ToDoTasks-Reducer";
+import {usersReducer} from "../Reducers/Users-reducers";
+import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
     counter: counterReducer,
     lists:ToDoListsReducer,
-    tasks:ToDoTaskReducer
+    tasks:ToDoTaskReducer,
+    users:usersReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-export const store = createStore(rootReducer)
+export const store = createStore(rootReducer,  applyMiddleware(thunk))
 
 store.subscribe(() => {
     localStorage.setItem('value', JSON.stringify(store.getState().counter.value))

@@ -6,6 +6,7 @@ type propsType = {
 }
 
 export const EditableSpan = (props:propsType) => {
+    console.log('SPAN')
     const [editMode, setEditMode] = useState(true)
     const [title, setTitle] = useState(props.value)
 

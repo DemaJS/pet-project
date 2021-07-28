@@ -6,8 +6,8 @@ import Avatar from '@material-ui/core/Avatar';
 import {Description} from "./Description";
 
 
-
 export function MyProfile() {
+
 
     return (
         <Card  elevation={2}>

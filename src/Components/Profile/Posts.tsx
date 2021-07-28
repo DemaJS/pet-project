@@ -4,10 +4,6 @@ import IconButton from "@material-ui/core/IconButton";
 import {InputAdornment, TextField} from "@material-ui/core";
 import SendIcon from '@material-ui/icons/Send';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import Don from './../../Images/don.jpg'
-import Leo from './../../Images/leo2.jpg'
-import Mike from './../../Images/mike.jpg'
-import Raf from './../../Images/raf.jpg'
 import CardHeader from "@material-ui/core/CardHeader";
 import Card from "@material-ui/core/Card";
 
@@ -15,7 +11,6 @@ import Card from "@material-ui/core/Card";
 type postType = {
     id:number
     name:string
-    ava:string
     message:string
     data:string
 }
@@ -23,10 +18,10 @@ type postType = {
 export function Posts() {
 
     const [posts,setPosts] = useState<Array<postType>>([
-        {id:1, name:'Don', ava:Don, message:'Kavabanga', data:'20.20.2021'},
-        {id:2, name:'Leo', ava:Leo, message:'Kavabanga', data:'20.20.2021'},
-        {id:3, name:'Mike', ava:Mike, message:'Kavabanga', data:'20.20.2021'},
-        {id:4, name:'Raf', ava:Raf, message:'Kavabanga', data:'20.20.2021'},
+        {id:1, name:'Don', message:'Kavabanga', data:'20.20.2021'},
+        {id:2, name:'Leo', message:'Kavabanga', data:'20.20.2021'},
+        {id:3, name:'Mike', message:'Kavabanga', data:'20.20.2021'},
+        {id:4, name:'Raf', message:'Kavabanga', data:'20.20.2021'},
     ])
 const [newPost,setNewPost] = useState('')
 
@@ -34,7 +29,7 @@ const [newPost,setNewPost] = useState('')
         setNewPost(e.currentTarget.value)
     }
     const addPost = (message:string) => {
-        let post = {id:1, name:'Don', ava:Don, message:message, data:'20.20.2021'}
+        let post = {id:1, name:'Don', message:message, data:'20.20.2021'}
         setPosts([post,...posts])
         setNewPost('')
     }
@@ -68,7 +63,7 @@ const [newPost,setNewPost] = useState('')
                                 avatar={
                                     <Avatar aria-label="recipe"
                                             style={{height:'70px',width:'70px'}}
-                                            src={el.ava}/>
+                                            />
                                 }
                                 title={el.name}
                                 subheader={el.message}

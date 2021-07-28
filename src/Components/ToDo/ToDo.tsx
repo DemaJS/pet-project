@@ -1,16 +1,23 @@
-import React from 'react'
+import React, {useCallback, useEffect} from 'react'
 import {MultiInput} from "./Multi-Input";
 import ToDoList from "./ToDo-List";
 import {Grid} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../State/Store";
-import {addToDoAC, deleteToDoAC, filterTaskAC} from "../../Reducers/ToDoLists-Reducer";
+import {
+    addToDoAC,
+    addToDoThunk,
+    deleteToDoAC,
+    deleteToDoThunk,
+    filterTaskAC,
+    getToDoThunk
+} from "../../Reducers/ToDoLists-Reducer";
 import {addTaskAC, changeCheckBoxAC, changeTaskNameAC, deleteTaskAC} from "../../Reducers/ToDoTasks-Reducer";
 
 export type todoListsType = {
     id: string
     title: string
-    filter: string
+    filter: filterType
 }
 
 export type taskType = {
@@ -24,36 +31,41 @@ export type tasksType = {
 export type filterType = 'all' | 'active' | 'completed'
 
 function ToDo() {
-
-
     const todoLists = useSelector<AppStateType,Array<todoListsType>>(state => state.lists)
     const tasks = useSelector<AppStateType,tasksType>(state => state.tasks)
     const dispatch = useDispatch()
 
-    const addToDo = (title: string) => {
-        let action = addToDoAC(title)
-        dispatch(action)
-    }
+    useEffect(() => {
+        dispatch(getToDoThunk())
+    }, [])
 
-    const deleteToDo = (id: string) => {
-        dispatch(deleteToDoAC(id))
-    }
+    const addToDo = useCallback((title: string) => {
+        dispatch(addToDoThunk(title))
+    },[dispatch])
 
-    const addTask = (todoID: string, taskName: string) => {
+    const deleteToDo = useCallback( (id: string) => {
+        dispatch(deleteToDoThunk(id))
+    },[dispatch])
+
+    const addTask = useCallback((todoID: string, taskName: string) => {
         dispatch(addTaskAC(todoID,taskName))
-    }
-    const deleteTask = (todoID: string, taskID: string) => {
+    },[dispatch])
+
+    const deleteTask = useCallback((todoID: string, taskID: string) => {
         dispatch(deleteTaskAC(todoID,taskID))
-    }
-    const filterTask = (todoID: string, filter: filterType) => {
+    }, [dispatch])
+
+    const filterTask = useCallback((todoID: string, filter: filterType) => {
         dispatch(filterTaskAC(todoID,filter))
-    }
-    const changeCheckBox = (todoID: string, taskID: string, isDone: boolean) => {
+    },[dispatch])
+
+    const changeCheckBox = useCallback((todoID: string, taskID: string, isDone: boolean) => {
         dispatch(changeCheckBoxAC(todoID,taskID,isDone))
-    }
-    const changeTaskName = (todoID: string, taskID: string, taskName: string) => {
+    },[dispatch])
+
+    const changeTaskName = useCallback((todoID: string, taskID: string, taskName: string) => {
         dispatch(changeTaskNameAC(todoID,taskID,taskName))
-    }
+    },[dispatch])
 
     return (
 
@@ -65,19 +77,13 @@ function ToDo() {
             <Grid container spacing={3}>
                 {
                     todoLists.map(el => {
-                            let filterTasks = tasks[el.id]
-                            if (el.filter === 'active') {
-                                filterTasks = tasks[el.id].filter(t => !t.isDone)
-                            }
-                            if (el.filter === 'completed') {
-                                filterTasks = tasks[el.id].filter(t => t.isDone)
-                            }
 
                             return (
                                 <Grid item>
                                     <ToDoList
+                                        filter={el.filter}
                                         key={el.id}
-                                        tasks={filterTasks}
+                                        tasks={tasks[el.id]}
                                         title={el.title}
                                         id={el.id}
                                         addTask={addTask}
