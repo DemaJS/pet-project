@@ -5,14 +5,18 @@ import {Grid} from "@material-ui/core";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../State/Store";
 import {
-    addToDoAC,
     addToDoThunk,
-    deleteToDoAC,
     deleteToDoThunk,
     filterTaskAC,
     getToDoThunk
 } from "../../Reducers/ToDoLists-Reducer";
-import {addTaskAC, changeCheckBoxAC, changeTaskNameAC, deleteTaskAC} from "../../Reducers/ToDoTasks-Reducer";
+import {
+    addTaskThunk,
+    changeCheckBoxAC,
+    changeTaskNameAC,
+    deleteTaskThunk
+} from "../../Reducers/ToDoTasks-Reducer";
+
 
 export type todoListsType = {
     id: string
@@ -48,11 +52,11 @@ function ToDo() {
     },[dispatch])
 
     const addTask = useCallback((todoID: string, taskName: string) => {
-        dispatch(addTaskAC(todoID,taskName))
+        dispatch(addTaskThunk(todoID,taskName))
     },[dispatch])
 
     const deleteTask = useCallback((todoID: string, taskID: string) => {
-        dispatch(deleteTaskAC(todoID,taskID))
+        dispatch(deleteTaskThunk(todoID,taskID))
     }, [dispatch])
 
     const filterTask = useCallback((todoID: string, filter: filterType) => {

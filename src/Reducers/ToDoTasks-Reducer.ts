@@ -4,40 +4,12 @@ import {addToDoType, setToDoType} from "./ToDoLists-Reducer";
 import axios from "axios";
 import {Dispatch} from "redux";
 
-export enum TaskStatuses {
-    New = 0,
-    InProgress = 1,
-    Completed = 2,
-    Draft = 3
-}
-
-export enum TaskPriorities {
-    Low = 0,
-    Middle = 1,
-    Hi = 2,
-    Urgently = 3,
-    Later = 4
-}
-
-export type TaskType = {
-    description: string
-    title: string
-    status: TaskStatuses
-    priority: TaskPriorities
-    startDate: string
-    deadline: string
-    id: string
-    todoListId: string
-    order: number
-    addedDate: string
-}
 
 type addTaskType = ReturnType<typeof addTaskAC>
 type deleteTaskType = ReturnType<typeof deleteTaskAC>
 type changeCheckBoxType = ReturnType<typeof changeCheckBoxAC>
 type changeTaskNameType = ReturnType<typeof changeTaskNameAC>
 type setTasksType = ReturnType<typeof setTasksAC>
-
 
 type actionType = addTaskType
     | deleteTaskType
@@ -134,7 +106,7 @@ export const setTasksThunk = (todoID:string) => {
 
 export const addTaskThunk = (todoID:string, title:string) => {
     return (dispatch:Dispatch) => {
-        axios.post(`https://social-network.samuraijs.com/api/1.1//todo-lists/${todoID}/tasks`,
+        axios.post(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todoID}/tasks`,
             {title},
             {withCredentials:true,
                 headers:{
@@ -143,6 +115,20 @@ export const addTaskThunk = (todoID:string, title:string) => {
                     if (response.data.resultCode === 0){
                         dispatch(addTaskAC(todoID, title))
                     }
+        })
+    }
+}
+
+export const deleteTaskThunk = (todoID:string, taskID:string) => {
+    return (dispatch:Dispatch) => {
+        axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todoID}/tasks/${taskID}`,
+            {withCredentials:true,
+                headers:{
+                    'api-key':'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                }}).then(response => {
+            if (response.data.resultCode === 0){
+                dispatch(deleteTaskAC(todoID,taskID))
+            }
         })
     }
 }

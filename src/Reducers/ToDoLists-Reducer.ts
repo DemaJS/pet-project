@@ -1,6 +1,7 @@
 import {filterType, todoListsType} from "../Components/ToDo/ToDo";
 import {v1} from "uuid";
 import axios from "axios";
+import {Dispatch} from "redux";
 
 export type addToDoType = {
     type: 'ADD_TODO'
@@ -65,7 +66,7 @@ export const filterTaskAC = (todoID: string, filter: filterType): filterTaskType
 }
 
 export const getToDoThunk = () => {
-    return (dispatch:any) => {
+    return (dispatch:Dispatch) => {
         axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists',
             {withCredentials:true,
             headers:{
@@ -77,7 +78,7 @@ export const getToDoThunk = () => {
     }
 }
 export const addToDoThunk = (title:string) => {
-    return (dispatch:any) => {
+    return (dispatch:Dispatch) => {
         axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists',{title:'New'},
             {withCredentials:true,
                 headers:{
@@ -92,7 +93,7 @@ export const addToDoThunk = (title:string) => {
 }
 
 export const deleteToDoThunk = (id:string) => {
-    return (dispatch:any) => {
+    return (dispatch:Dispatch) => {
         axios.delete(`https://social-network.samuraijs.com/api/1.1//todo-lists/${id}`,
             {withCredentials:true,
                 headers:{
