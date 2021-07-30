@@ -2,7 +2,7 @@ import {filterType, todoListsType} from "../Components/ToDo/ToDo";
 import {v1} from "uuid";
 import axios from "axios";
 
-type addToDoType = {
+export type addToDoType = {
     type: 'ADD_TODO'
     title: string
     id: string
@@ -16,7 +16,7 @@ type filterTaskType = {
     todoID: string
     filter: filterType
 }
-type setToDoType = {
+export type setToDoType = {
     type: 'SET_TODO'
     newArray: Array<todoListsType>
 }
@@ -28,9 +28,12 @@ const initialState: Array<todoListsType> = []
 export const ToDoListsReducer = (state: Array<todoListsType> = initialState, action: actionType) => {
     switch (action.type) {
         case "SET_TODO":
-            return [
-                ...action.newArray
-            ]
+            return action.newArray.map(el => {
+                return {
+                    ...el,
+                    filter:'all'
+                }
+            })
         case "ADD_TODO":
             let newToDo = {id: action.id, title: action.title, filter: 'all'}
             return [newToDo, ...state];
@@ -75,7 +78,7 @@ export const getToDoThunk = () => {
 }
 export const addToDoThunk = (title:string) => {
     return (dispatch:any) => {
-        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists',{title},
+        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists',{title:'New'},
             {withCredentials:true,
                 headers:{
                     'api-key':'c2e39203-417e-4936-90ba-36cd8b9b6c99'

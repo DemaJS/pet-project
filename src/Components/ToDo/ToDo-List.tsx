@@ -1,10 +1,12 @@
-import React, {ChangeEvent, useCallback, useState} from "react";
+import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {filterType, taskType} from "./ToDo";
 import {Button, ButtonGroup, Checkbox, IconButton, Paper, TextField} from "@material-ui/core";
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
 import {Delete} from "@material-ui/icons";
 import {EditableSpan} from "./Editable-Span";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import {setTasksThunk} from "../../Reducers/ToDoTasks-Reducer";
+import {useDispatch} from "react-redux";
 
 type propsType = {
     filter:filterType
@@ -23,6 +25,12 @@ const ToDoList = React.memo((props: propsType) => {
 
     console.log('TODO')
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(setTasksThunk(props.id))
+    }, [])
+
     const [taskName, setTaskName] = useState('')
     const [error, setError] = useState('')
 
@@ -38,14 +46,13 @@ const ToDoList = React.memo((props: propsType) => {
         setTaskName(e.currentTarget.value)
     }
 
- /*   let filterTasks = props.tasks
+    let filterTasks = props.tasks
     if (props.filter === 'active') {
         filterTasks = filterTasks.filter(t => !t.isDone)
     }
     if (props.filter === 'completed') {
         filterTasks = filterTasks.filter(t => t.isDone)
-    }*/
-
+    }
 
     return (
         <Paper style={{padding:'10px'}} elevation={3}>
@@ -71,7 +78,7 @@ const ToDoList = React.memo((props: propsType) => {
                 <PlaylistAddIcon/>
             </IconButton>
 
-            {/*{
+            {
                 filterTasks.map(el => {
 
                     let onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -96,7 +103,7 @@ const ToDoList = React.memo((props: propsType) => {
                         </div>
                     )
                 })
-            }*/}
+            }
             <div>
                 <ButtonGroup variant="text" color="primary" aria-label="text primary button group">
                     <Button onClick={() => props.filterTask(props.id, 'all')}>All</Button>
