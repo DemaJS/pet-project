@@ -79,7 +79,7 @@ export const getToDoThunk = () => {
 }
 export const addToDoThunk = (title:string) => {
     return (dispatch:Dispatch) => {
-        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists',{title:'New'},
+        axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists',{title},
             {withCredentials:true,
                 headers:{
                     'api-key':'c2e39203-417e-4936-90ba-36cd8b9b6c99'

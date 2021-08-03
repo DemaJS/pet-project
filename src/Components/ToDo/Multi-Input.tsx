@@ -20,7 +20,7 @@ export const MultiInput = React.memo((props:propsType) => {
 
         props.addToDo(toDo)
         setToDo('')
-    },[props.addToDo])
+    },[props.addToDo,toDo])
 
     const onChangeToDo = (e: ChangeEvent<HTMLInputElement>) => {
         setToDo(e.currentTarget.value)

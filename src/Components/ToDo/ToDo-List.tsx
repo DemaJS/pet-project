@@ -29,7 +29,7 @@ const ToDoList = React.memo((props: propsType) => {
 
     useEffect(() => {
         dispatch(setTasksThunk(props.id))
-    }, [])
+    }, [dispatch])
 
     const [taskName, setTaskName] = useState('')
     const [error, setError] = useState('')

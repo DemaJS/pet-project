@@ -2,9 +2,8 @@ import React, {useEffect} from 'react'
 import Pagination from '@material-ui/lab/Pagination';
 import {Grid} from "@material-ui/core";
 import {User} from "./User";
-import axios from "axios";
 import {useDispatch, useSelector} from "react-redux";
-import {addUsersAC, userItemType} from "../../Reducers/Users-reducers";
+import {setUsersThunk, userItemType} from "../../Reducers/Users-reducers";
 import {AppStateType} from "../../State/Store";
 
 
@@ -12,17 +11,18 @@ export function Users() {
 
     const dispatch = useDispatch()
     const users = useSelector<AppStateType,Array<userItemType>>((state) => state.users.users )
+    const pageSize = useSelector<AppStateType,number>((state) => state.users.pageSize )
+    const currentPage = useSelector<AppStateType,number>((state) => state.users.currentPage )
+    const total = useSelector<AppStateType,number>((state) => state.users.total )
 
     useEffect(() => {
-        axios.get(' https://social-network.samuraijs.com/api/1.0/users').then(response => {
-            dispatch(addUsersAC(response.data.items))
-        })
+        dispatch(setUsersThunk(pageSize,currentPage))
     },[])
 
     return (
         <>
             <div style={{marginBottom:'20px'}}>
-                <Pagination count={10} variant="outlined" shape="rounded"/>
+                <Pagination count={total} variant="outlined" shape="rounded" />
             </div>
 
             <Grid container spacing={3}>
