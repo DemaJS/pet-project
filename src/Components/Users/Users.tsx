@@ -12,30 +12,36 @@ import {statusType} from "../../Reducers/App-reducer";
 export function Users() {
 
     const dispatch = useDispatch()
-    const users = useSelector<AppStateType,Array<userItemType>>((state) => state.users.users )
-    const pageSize = useSelector<AppStateType,number>((state) => state.users.pageSize )
-    const currentPage = useSelector<AppStateType,number>((state) => state.users.currentPage )
-    const total = useSelector<AppStateType,number>((state) => state.users.total )
-    const loading = useSelector<AppStateType,statusType>(state => state.app.status)
+    const users = useSelector<AppStateType, Array<userItemType>>((state) => state.users.users)
+    const pageSize = useSelector<AppStateType, number>((state) => state.users.pageSize)
+    const currentPage = useSelector<AppStateType, number>((state) => state.users.currentPage)
+    const total = useSelector<AppStateType, number>((state) => state.users.total)
+    const loading = useSelector<AppStateType, statusType>(state => state.app.status)
 
     useEffect(() => {
-        dispatch(setUsersThunk(pageSize,currentPage))
-    },[])
+        dispatch(setUsersThunk(pageSize, currentPage))
+    }, [])
+
+    const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+        dispatch(setUsersThunk(pageSize, value))
+    };
+
 
     return (
         <>
             {loading === 'loading' && <LinearProgress/>}
-            <div style={{marginBottom:'20px'}}>
-                <Pagination count={total} variant="outlined" shape="rounded" />
-            </div>
+                <div style={{marginBottom: '20px'}}>
+                    <Pagination count={total} variant="outlined" shape="rounded" page={currentPage}
+                                onChange={handleChange}/>
+                </div>
 
-            <Grid container spacing={3}>
-                {
-                    users.map(el => {
-                        return  <User name = {el.name} status = {el.status}/>
-                    })
-                }
-            </Grid>
+                <Grid container spacing={3}>
+                    {
+                        users.map(el => {
+                            return <User name={el.name} status={el.status}/>
+                        })
+                    }
+                </Grid>
         </>
     )
 }
