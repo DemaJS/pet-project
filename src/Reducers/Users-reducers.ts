@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import axios from "axios";
+import {setStatusAC} from "./App-reducer";
 
 type photosType = {
     small: string
@@ -24,9 +25,9 @@ type initialStateType = typeof initialState
 
 const initialState = {
     users: [] as Array<userItemType>,
-    total: 0 as number,
-    pageSize: 20 as number,
-    currentPage: 1 as number
+    total: 0,
+    pageSize: 20,
+    currentPage: 1
 }
 
 
@@ -65,6 +66,7 @@ export const setCurrentPageAC = (page: number) => {
 
 export const setUsersThunk = (pageSize: number, currentPage: number) => {
     return (dispatch: Dispatch) => {
+        dispatch(setStatusAC('loading'))
         axios.get(` https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${currentPage}`,
             {
                 withCredentials: true,
@@ -76,6 +78,7 @@ export const setUsersThunk = (pageSize: number, currentPage: number) => {
                 dispatch(setUsersAC(response.data.items))
                 dispatch(setTotalAC(response.data.totalCount))
                 dispatch(setCurrentPageAC(currentPage))
+                dispatch(setStatusAC('succeeded'))
             })
     }
 }

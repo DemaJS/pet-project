@@ -4,12 +4,14 @@ import {ToDoListsReducer} from "../Reducers/ToDoLists-Reducer";
 import {ToDoTaskReducer} from "../Reducers/ToDoTasks-Reducer";
 import {usersReducer} from "../Reducers/Users-reducers";
 import thunk from 'redux-thunk';
+import {appReducer} from "../Reducers/App-reducer";
 
 const rootReducer = combineReducers({
     counter: counterReducer,
     lists:ToDoListsReducer,
     tasks:ToDoTaskReducer,
-    users:usersReducer
+    users:usersReducer,
+    app:appReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>

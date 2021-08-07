@@ -18,7 +18,7 @@ export function User(props:propsType) {
 
             return (
                 <Grid item>
-                    <Card>
+                    <Card >
                         <CardHeader
                             avatar={
                                 <Avatar aria-label="recipe" style={{height:'100px',width:'100px'}}>

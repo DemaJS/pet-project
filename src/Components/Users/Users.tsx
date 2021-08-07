@@ -5,6 +5,8 @@ import {User} from "./User";
 import {useDispatch, useSelector} from "react-redux";
 import {setUsersThunk, userItemType} from "../../Reducers/Users-reducers";
 import {AppStateType} from "../../State/Store";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import {statusType} from "../../Reducers/App-reducer";
 
 
 export function Users() {
@@ -14,6 +16,7 @@ export function Users() {
     const pageSize = useSelector<AppStateType,number>((state) => state.users.pageSize )
     const currentPage = useSelector<AppStateType,number>((state) => state.users.currentPage )
     const total = useSelector<AppStateType,number>((state) => state.users.total )
+    const loading = useSelector<AppStateType,statusType>(state => state.app.status)
 
     useEffect(() => {
         dispatch(setUsersThunk(pageSize,currentPage))
@@ -21,6 +24,7 @@ export function Users() {
 
     return (
         <>
+            {loading === 'loading' && <LinearProgress/>}
             <div style={{marginBottom:'20px'}}>
                 <Pagination count={total} variant="outlined" shape="rounded" />
             </div>

@@ -2,13 +2,14 @@ import React, {useCallback, useEffect} from 'react'
 import {MultiInput} from "./Multi-Input";
 import ToDoList from "./ToDo-List";
 import {Grid} from "@material-ui/core";
+import LinearProgress from '@material-ui/core/LinearProgress'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../State/Store";
 import {
     addToDoThunk,
     deleteToDoThunk,
     filterTaskAC,
-    getToDoThunk
+    setToDoThunk
 } from "../../Reducers/ToDoLists-Reducer";
 import {
     addTaskThunk,
@@ -16,18 +17,22 @@ import {
     changeTaskNameAC,
     deleteTaskThunk
 } from "../../Reducers/ToDoTasks-Reducer";
+import {statusType} from "../../Reducers/App-reducer";
+import {ErrorSnackbar} from "../Utils/Error-Component";
 
 
 export type todoListsType = {
     id: string
     title: string
     filter: filterType
+    entityStatus: boolean
 }
 
 export type taskType = {
     id: string
     title: string
     isDone: boolean
+    entityStatusTask:boolean
 }
 export type tasksType = {
     [key: string]: Array<taskType>
@@ -35,12 +40,14 @@ export type tasksType = {
 export type filterType = 'all' | 'active' | 'completed'
 
 function ToDo() {
+
     const todoLists = useSelector<AppStateType,Array<todoListsType>>(state => state.lists)
     const tasks = useSelector<AppStateType,tasksType>(state => state.tasks)
+    const loading = useSelector<AppStateType,statusType>(state => state.app.status)
     const dispatch = useDispatch()
 
     useEffect(() => {
-        dispatch(getToDoThunk())
+        dispatch(setToDoThunk())
     }, [])
 
     const addToDo = useCallback((title: string) => {
@@ -74,6 +81,10 @@ function ToDo() {
     return (
 
         <>
+            {loading === 'loading' && <LinearProgress/>}
+
+            <ErrorSnackbar/>
+
             <Grid container>
                 <MultiInput addToDo={addToDo}/>
             </Grid>
@@ -90,6 +101,7 @@ function ToDo() {
                                         tasks={tasks[el.id]}
                                         title={el.title}
                                         id={el.id}
+                                        entityStatus = {el.entityStatus}
                                         addTask={addTask}
                                         deleteTask={deleteTask}
                                         filterTask={filterTask}

@@ -19,9 +19,10 @@ type propsType = {
     changeCheckBox: (todoID: string, taskID: string, isDone: boolean) => void
     changeTaskName: (todoID: string, taskID: string, taskName: string) => void
     deleteToDo:(id:string) => void
+    entityStatus:boolean
 }
 
-const ToDoList = React.memo((props: propsType) => {
+ const ToDoList = React.memo((props: propsType) => {
 
     console.log('TODO')
 
@@ -29,7 +30,7 @@ const ToDoList = React.memo((props: propsType) => {
 
     useEffect(() => {
         dispatch(setTasksThunk(props.id))
-    }, [dispatch])
+    },[dispatch])
 
     const [taskName, setTaskName] = useState('')
     const [error, setError] = useState('')
@@ -59,7 +60,7 @@ const ToDoList = React.memo((props: propsType) => {
 
             <h3>
                 {props.title ? `${props.title}` : 'ToDo'}
-                <IconButton onClick={() => props.deleteToDo(props.id)}>
+                <IconButton onClick={() => props.deleteToDo(props.id)} disabled={props.entityStatus}>
                     <HighlightOffIcon/>
                 </IconButton>
             </h3>
@@ -90,6 +91,7 @@ const ToDoList = React.memo((props: propsType) => {
 
                     return (
                         <div>
+
                             <Checkbox
                                 checked={el.isDone}
                                 onChange={onChangeHandler}
@@ -97,7 +99,8 @@ const ToDoList = React.memo((props: propsType) => {
                             />
                             {' '}
                             <EditableSpan value={el.title} changeTaskName={onchangeTaskName}/>
-                            <IconButton aria-label="delete" onClick={() => props.deleteTask(props.id, el.id)}>
+                            <IconButton aria-label="delete" onClick={() => props.deleteTask(props.id, el.id)}
+                                        disabled={el.entityStatusTask}>
                                 <Delete/>
                             </IconButton>
                         </div>

@@ -20,6 +20,7 @@ export const EditableSpan = (props:propsType) => {
 
     return (
         <>
+
             {
                 editMode
                     ? <span onDoubleClick={() => setEditMode(false)}>{props.value}</span>
