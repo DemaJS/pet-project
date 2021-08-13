@@ -1,7 +1,8 @@
 import React, {ChangeEvent, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from "@material-ui/core/IconButton";
-import {InputAdornment, TextField} from "@material-ui/core";
+import TextField from "@material-ui/core/TextField";
+import InputAdornment from "@material-ui/core/InputAdornment";
 import SendIcon from '@material-ui/icons/Send';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import CardHeader from "@material-ui/core/CardHeader";
@@ -61,9 +62,7 @@ const [newPost,setNewPost] = useState('')
                                style={{marginTop:'10px',maxWidth:'500px',width:'500px'}}>
                             <CardHeader
                                 avatar={
-                                    <Avatar aria-label="recipe"
-                                            style={{height:'70px',width:'70px'}}
-                                            />
+                                    <Avatar style={{height:'70px',width:'70px'}}/>
                                 }
                                 title={el.name}
                                 subheader={el.message}

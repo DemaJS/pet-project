@@ -3,6 +3,8 @@ import {Grid} from "@material-ui/core";
 import {MyProfile} from "./MyProfile";
 import {Posts} from "./Posts";
 
+
+
 export function Profile() {
 
     return (

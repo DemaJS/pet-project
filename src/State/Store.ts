@@ -5,18 +5,26 @@ import {ToDoTaskReducer} from "../Reducers/ToDoTasks-Reducer";
 import {usersReducer} from "../Reducers/Users-reducers";
 import thunk from 'redux-thunk';
 import {appReducer} from "../Reducers/App-reducer";
+import {authReducer} from "../Reducers/Auth-reducer";
+import {profileReducer} from "../Reducers/Profile-reducer";
 
 const rootReducer = combineReducers({
     counter: counterReducer,
     lists:ToDoListsReducer,
     tasks:ToDoTaskReducer,
     users:usersReducer,
-    app:appReducer
+    app:appReducer,
+    auth:authReducer,
+    profile:profileReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
 export const store = createStore(rootReducer,  applyMiddleware(thunk))
+
+
+// @ts-ignore
+window.store = store
 
 store.subscribe(() => {
     localStorage.setItem('value', JSON.stringify(store.getState().counter.value))

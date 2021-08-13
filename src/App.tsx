@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {createStyles, Theme, makeStyles} from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,12 +13,20 @@ import AlarmIcon from '@material-ui/icons/Alarm';
 import GroupAddIcon from '@material-ui/icons/GroupAdd';
 import PersonIcon from '@material-ui/icons/Person';
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
+import FaceIcon from '@material-ui/icons/Face';
+import Chip from '@material-ui/core/Chip';
 import {NavLink, Route} from 'react-router-dom';
 import {Counter} from "./Components/Counter/Counter";
 import ToDo from "./Components/ToDo/ToDo";
 import {Profile} from "./Components/Profile/Profile";
 import {Users} from "./Components/Users/Users";
-import FormDialog from "./Components/Login/Login";
+import {useDispatch, useSelector} from "react-redux";
+import {logoutThunk, setAuthThunk} from "./Reducers/Auth-reducer";
+import {AppStateType} from "./State/Store";
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import {SignupForm} from "./Components/Login/Formik-login";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Button from "@material-ui/core/Button";
 
 const drawerWidth = 240;
 
@@ -50,15 +58,52 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
-export default function App() {
+export function App() {
+
+    const dispatch = useDispatch()
+
+    // @ts-ignore
+    const login = useSelector<AppStateType, string>((state) => state.auth.login)
+
+    useEffect(() => {
+        dispatch(setAuthThunk())
+    }, [])
+
     const classes = useStyles();
+
+    const logoutHandle = () => {
+        dispatch(logoutThunk())
+    }
 
     return (
         <div className={classes.root}>
             <CssBaseline/>
             <AppBar position="fixed" className={classes.appBar}>
                 <Toolbar>
-                    <FormDialog/>
+
+                    {
+                        login
+                            ?
+                            <>
+                            <Button
+                                onClick={logoutHandle}
+                                variant="outlined"
+                                size="large"
+                                startIcon={<ExitToAppIcon />}>
+                                Log Out
+                            </Button>
+                            <Chip label={login} color="primary" icon={<FaceIcon/>}/>
+                            </>
+                            :
+                            <NavLink to={'/login'} style={{textDecoration:'none'}}>
+                                <Button
+                                    variant="outlined"
+                                    size="large"
+                                    startIcon={<VpnKeyIcon />}>
+                                    Log In
+                                </Button>
+                            </NavLink>
+                    }
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -74,28 +119,28 @@ export default function App() {
                     <Divider/>
                     <List>
 
-                        <NavLink to='/counter' style={{textDecoration:'none'}}>
+                        <NavLink to='/counter' style={{textDecoration: 'none'}}>
                             <ListItem button>
                                 <ListItemIcon><AlarmIcon/></ListItemIcon>
                                 <ListItemText primary='Counter'/>
                             </ListItem>
                         </NavLink>
 
-                        <NavLink to='/users' style={{textDecoration:'none'}}>
+                        <NavLink to='/users' style={{textDecoration: 'none'}}>
                             <ListItem button>
                                 <ListItemIcon><GroupAddIcon/></ListItemIcon>
                                 <ListItemText primary='Users'/>
                             </ListItem>
                         </NavLink>
 
-                        <NavLink to='/profile' style={{textDecoration:'none'}}>
+                        <NavLink to='/profile' style={{textDecoration: 'none'}}>
                             <ListItem button>
                                 <ListItemIcon><PersonIcon/></ListItemIcon>
                                 <ListItemText primary='Profile'/>
                             </ListItem>
                         </NavLink>
 
-                        <NavLink to='/todo' style={{textDecoration:'none'}}>
+                        <NavLink to='/todo' style={{textDecoration: 'none'}}>
                             <ListItem button>
                                 <ListItemIcon><FormatListNumberedIcon/></ListItemIcon>
                                 <ListItemText primary='ToDo List'/>
@@ -109,8 +154,9 @@ export default function App() {
                 <Toolbar/>
                 <Route path="/counter" render={() => <Counter/>}/>
                 <Route path="/todo" render={() => <ToDo/>}/>
-                <Route path="/profile" render={() => <Profile/>}/>
+                <Route path="/profile/:userID?" render={() => <Profile/>}/>
                 <Route path="/users" render={() => <Users/>}/>
+                <Route path="/login" render={() => <SignupForm/>}/>
             </main>
         </div>
     )

@@ -6,11 +6,13 @@ import CardActions from "@material-ui/core/CardActions";
 import IconButton from "@material-ui/core/IconButton";
 import PersonAddDisabledIcon from "@material-ui/icons/PersonAddDisabled";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import ava from './../../Images/atom.png'
 
 
 type propsType = {
     name:string
     status:string
+    photo:string
 }
 
 
@@ -20,14 +22,9 @@ export function User(props:propsType) {
                 <Grid item>
                     <Card >
                         <CardHeader
-                            avatar={
-                                <Avatar aria-label="recipe" style={{height:'100px',width:'100px'}}>
-                                    VD
-                                </Avatar>
-                            }
-                            title={props.name} /*"Shrimp and Chorizo Paella"*/
-                            subheader={props.status ? props.status : 'Status'} /*"September 14, 2016"*/
-                        />
+                            avatar={<img src={props.photo ? props.photo : ava} style={{height:'100px',width:'100px'}}/>}
+                            title={props.name}
+                            subheader={props.status ? props.status : 'Status'}                         />
                         <CardActions disableSpacing>
                             <IconButton>
                                 <PersonAddDisabledIcon/>

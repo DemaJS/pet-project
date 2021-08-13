@@ -22,6 +22,7 @@ export function Users() {
         dispatch(setUsersThunk(pageSize, currentPage))
     }, [])
 
+
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         dispatch(setUsersThunk(pageSize, value))
     };
@@ -38,7 +39,7 @@ export function Users() {
                 <Grid container spacing={3}>
                     {
                         users.map(el => {
-                            return <User name={el.name} status={el.status}/>
+                            return <User name={el.name} status={el.status} photo={el.photos.large}/>
                         })
                     }
                 </Grid>
