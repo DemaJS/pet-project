@@ -26,7 +26,7 @@ type initialStateType = typeof initialState
 const initialState = {
     users: [] as Array<userItemType>,
     total: 0,
-    pageSize: 20,
+    pageSize: 10,
     currentPage: 1
 }
 

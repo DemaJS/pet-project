@@ -17,7 +17,7 @@ type photosType = {
     large: string
 }
 
-type profileType = {
+export type profileType = {
     userId: number
     lookingForAJob: boolean
     lookingForAJobDescription: string
@@ -42,7 +42,7 @@ export const profileReducer = (state: initialStateType = initialState, action: a
         case "SET_PROFILE":
             return {
                 ...state,
-                profile: action.profile
+                profile: {...action.profile}
             }
         default: return state
     }

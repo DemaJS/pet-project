@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react'
 import Pagination from '@material-ui/lab/Pagination';
-import {Grid} from "@material-ui/core";
+import {Card, Grid} from "@material-ui/core";
 import {User} from "./User";
 import {useDispatch, useSelector} from "react-redux";
 import {setUsersThunk, userItemType} from "../../Reducers/Users-reducers";
@@ -36,13 +36,13 @@ export function Users() {
                                 onChange={handleChange}/>
                 </div>
 
-                <Grid container spacing={3}>
+                <Card elevation={2}>
                     {
                         users.map(el => {
-                            return <User name={el.name} status={el.status} photo={el.photos.large}/>
+                            return <User name={el.name} status={el.status} photo={el.photos.large} id = {el.id}/>
                         })
                     }
-                </Grid>
+                </Card>
         </>
     )
 }

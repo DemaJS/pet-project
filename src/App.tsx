@@ -19,14 +19,18 @@ import {NavLink, Route} from 'react-router-dom';
 import {Counter} from "./Components/Counter/Counter";
 import ToDo from "./Components/ToDo/ToDo";
 import {Profile} from "./Components/Profile/Profile";
-import {Users} from "./Components/Users/Users";
 import {useDispatch, useSelector} from "react-redux";
 import {logoutThunk, setAuthThunk} from "./Reducers/Auth-reducer";
 import {AppStateType} from "./State/Store";
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import CodeIcon from '@material-ui/icons/Code';
 import {SignupForm} from "./Components/Login/Formik-login";
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Button from "@material-ui/core/Button";
+import {Users} from "./Components/Users/Users";
+import {TestComponent} from "./Components/Utils/Test-component";
+import Grid from "@material-ui/core/Grid";
+
 
 const drawerWidth = 240;
 
@@ -76,88 +80,101 @@ export function App() {
     }
 
     return (
-        <div className={classes.root}>
-            <CssBaseline/>
-            <AppBar position="fixed" className={classes.appBar}>
-                <Toolbar>
 
-                    {
-                        login
-                            ?
-                            <>
-                            <Button
-                                onClick={logoutHandle}
-                                variant="outlined"
-                                size="large"
-                                startIcon={<ExitToAppIcon />}>
-                                Log Out
-                            </Button>
-                            <Chip label={login} color="primary" icon={<FaceIcon/>}/>
-                            </>
-                            :
-                            <NavLink to={'/login'} style={{textDecoration:'none'}}>
-                                <Button
-                                    variant="outlined"
-                                    size="large"
-                                    startIcon={<VpnKeyIcon />}>
-                                    Log In
-                                </Button>
-                            </NavLink>
-                    }
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                className={classes.drawer}
-                variant="permanent"
-                classes={{
-                    paper: classes.drawerPaper,
-                }}
-            >
-                <Toolbar/>
-                <div className={classes.drawerContainer}>
+            <div className={classes.root}>
+                <CssBaseline/>
+                <AppBar position="fixed" className={classes.appBar}>
+                    <Toolbar>
 
-                    <Divider/>
-                    <List>
+                        {
+                            login
+                                ?
+                                <>
+                                    <Button
+                                        onClick={logoutHandle}
+                                        variant="outlined"
+                                        size="large"
+                                        startIcon={<ExitToAppIcon/>}>
+                                        Log Out
+                                    </Button>
+                                    <Chip label={login} color="primary" icon={<FaceIcon/>}/>
+                                </>
+                                :
+                                <NavLink to={'/login'} style={{textDecoration: 'none'}}>
+                                    <Button
+                                        variant="outlined"
+                                        size="large"
+                                        startIcon={<VpnKeyIcon/>}>
+                                        Log In
+                                    </Button>
+                                </NavLink>
+                        }
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    className={classes.drawer}
+                    variant="permanent"
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <Toolbar/>
+                    <div className={classes.drawerContainer}>
 
-                        <NavLink to='/counter' style={{textDecoration: 'none'}}>
-                            <ListItem button>
-                                <ListItemIcon><AlarmIcon/></ListItemIcon>
-                                <ListItemText primary='Counter'/>
-                            </ListItem>
-                        </NavLink>
+                        <Divider/>
 
-                        <NavLink to='/users' style={{textDecoration: 'none'}}>
-                            <ListItem button>
-                                <ListItemIcon><GroupAddIcon/></ListItemIcon>
-                                <ListItemText primary='Users'/>
-                            </ListItem>
-                        </NavLink>
+                            <List>
 
-                        <NavLink to='/profile' style={{textDecoration: 'none'}}>
-                            <ListItem button>
-                                <ListItemIcon><PersonIcon/></ListItemIcon>
-                                <ListItemText primary='Profile'/>
-                            </ListItem>
-                        </NavLink>
+                                <NavLink to='/counter' style={{textDecoration: 'none'}}>
+                                    <ListItem button>
+                                        <ListItemIcon><AlarmIcon/></ListItemIcon>
+                                        <ListItemText primary='Counter'/>
+                                    </ListItem>
+                                </NavLink>
 
-                        <NavLink to='/todo' style={{textDecoration: 'none'}}>
-                            <ListItem button>
-                                <ListItemIcon><FormatListNumberedIcon/></ListItemIcon>
-                                <ListItemText primary='ToDo List'/>
-                            </ListItem>
-                        </NavLink>
+                                <NavLink to='/users' style={{textDecoration: 'none'}}>
+                                    <ListItem button>
+                                        <ListItemIcon><GroupAddIcon/></ListItemIcon>
+                                        <ListItemText primary='Users'/>
+                                    </ListItem>
+                                </NavLink>
 
-                    </List>
-                </div>
-            </Drawer>
-            <main className={classes.content}>
-                <Toolbar/>
-                <Route path="/counter" render={() => <Counter/>}/>
-                <Route path="/todo" render={() => <ToDo/>}/>
-                <Route path="/profile/:userID?" render={() => <Profile/>}/>
-                <Route path="/users" render={() => <Users/>}/>
-                <Route path="/login" render={() => <SignupForm/>}/>
-            </main>
-        </div>
+                                <NavLink to='/profile' style={{textDecoration: 'none'}}>
+                                    <ListItem button>
+                                        <ListItemIcon><PersonIcon/></ListItemIcon>
+                                        <ListItemText primary='Profile'/>
+                                    </ListItem>
+                                </NavLink>
+
+                                <NavLink to='/todo' style={{textDecoration: 'none'}}>
+                                    <ListItem button>
+                                        <ListItemIcon><FormatListNumberedIcon/></ListItemIcon>
+                                        <ListItemText primary='ToDo List'/>
+                                    </ListItem>
+                                </NavLink>
+
+                                <NavLink to='/test' style={{textDecoration: 'none'}}>
+                                    <ListItem button>
+                                        <ListItemIcon><CodeIcon/></ListItemIcon>
+                                        <ListItemText primary='Test'/>
+                                    </ListItem>
+                                </NavLink>
+
+                            </List>
+
+                    </div>
+                </Drawer>
+
+                    <main className={classes.content}>
+                        <Toolbar/>
+                        <Route path="/counter" render={() => <Counter/>}/>
+                        <Route path="/todo" render={() => <ToDo/>}/>
+                        <Route path="/profile/:userID?" render={() => <Profile/>}/>
+                        <Route path="/users" render={() => <Users/>}/>
+                        <Route path="/login" render={() => <SignupForm/>}/>
+                        <Route path="/test" render={() => <TestComponent/>}/>
+                    </main>
+
+            </div>
     )
 }

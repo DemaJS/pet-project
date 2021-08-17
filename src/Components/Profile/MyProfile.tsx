@@ -7,31 +7,57 @@ import {Description} from "./Description";
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../State/Store";
 import {setProfileThunk} from "../../Reducers/Profile-reducer";
+import ava from './../../Images/atom.png'
+import {Contacts} from "./Contacts";
 
 
-export function MyProfile() {
+type propsType = {
+    id: string
+}
+
+export function MyProfile(props: propsType) {
 
     // @ts-ignore
-    const meID = useSelector<AppStateType,number>((state) => state.auth.id)
+    const meID = useSelector<AppStateType, number>((state) => state.auth.id)
+
     const dispatch = useDispatch()
+
     useEffect(() => {
-        dispatch(setProfileThunk(meID))
-    })
+        props.id ? dispatch(setProfileThunk(+props.id)) : dispatch(setProfileThunk(meID))
+    }, [props.id, meID])
+
+    const userName = useSelector<AppStateType, string>((state) => state.profile.profile.fullName)
+    /*    const userAvatar = useSelector<AppStateType,string>((state) => state.profile.profile.photos.large)*/
+
 
     return (
-        <Card  elevation={2}>
-            <CardHeader
-                avatar={
-                    <Avatar aria-label="recipe" style={{height:'100px',width:'100px'}}>
-                        VD
-                    </Avatar>
-                }
-                title="Shrimp and Chorizo Paella"
-                subheader="September 14, 2016"
-            />
-            <CardContent>
-                <Description/>
-            </CardContent>
-        </Card>
+        <>
+            <Card elevation={2} >
+                <CardHeader
+                    style={{backgroundColor:'#dce6f1'}}
+                    avatar={
+                        <Avatar aria-label="recipe" style={{height: '100px', width: '100px'}}
+                                src={ava}>
+                        </Avatar>
+                    }
+                    title={userName}
+                    subheader='Front-end developer'
+                />
+            </Card>
+
+            <Card style={{marginTop: '20px',backgroundColor:'#dce6f1'}} elevation={2}>
+                <CardHeader title='Description:'/>
+                <CardContent>
+                    <Description/>
+                </CardContent>
+            </Card>
+
+            <Card style={{marginTop: '20px', backgroundColor:'#dce6f1'}} elevation={2}>
+                <CardHeader title='Contacts:'/>
+                <CardContent>
+                    <Contacts/>
+                </CardContent>
+            </Card>
+        </>
     );
 }
