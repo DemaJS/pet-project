@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react'
 import Pagination from '@material-ui/lab/Pagination';
-import {Card, Grid} from "@material-ui/core";
+import Card from "@material-ui/core/Card";
 import {User} from "./User";
 import {useDispatch, useSelector} from "react-redux";
 import {setUsersThunk, userItemType} from "../../Reducers/Users-reducers";
 import {AppStateType} from "../../State/Store";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {statusType} from "../../Reducers/App-reducer";
+import Grid from "@material-ui/core/Grid";
 
 
 export function Users() {
@@ -29,21 +30,20 @@ export function Users() {
 
 
     return (
-        <>
+        <Grid item xs={12}>
             {loading === 'loading' && <LinearProgress/>}
-                <div style={{marginBottom: '20px'}}>
-                    <Pagination count={total} variant="outlined" shape="rounded" page={currentPage}
-                                onChange={handleChange}/>
-                </div>
 
-                <Card elevation={2}>
+                <Pagination count={total} variant="outlined" shape="rounded" page={currentPage}
+                            onChange={handleChange} style={{padding: '10px'}}/>
+
+                <Card elevation={2} style={{margin: '10px'}}>
                     {
                         users.map(el => {
-                            return <User name={el.name} status={el.status} photo={el.photos.large} id = {el.id}/>
+                            return <User name={el.name} status={el.status} photo={el.photos.large} id={el.id}/>
                         })
                     }
                 </Card>
-        </>
+        </Grid>
     )
 }
 

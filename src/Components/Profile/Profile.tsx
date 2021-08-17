@@ -14,11 +14,11 @@ console.log(userID)
 
     // @ts-ignore
     return (
-        <Grid container spacing={5}>
-            <Grid xs={7} item >
+        <Grid container spacing={5} style={{margin:'20px'}}>
+            <Grid xs={12} lg={6}  item >
                 <MyProfile id = {userID}/>
             </Grid>
-            <Grid xs={5} item >
+            <Grid xs={12} lg={6} item >
                 <Posts/>
             </Grid>
         </Grid>

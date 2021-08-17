@@ -9,6 +9,7 @@ import {InputComponent} from "./InputComponent";
 import SaveAltIcon from '@material-ui/icons/SaveAlt';
 import {useDispatch} from "react-redux";
 import {setMaxValueAC, setStartValueAC, setValueAC} from "../../Reducers/Counter-reducer";
+import CardHeader from "@material-ui/core/CardHeader";
 
 
 const useStyles = makeStyles({
@@ -77,8 +78,8 @@ export function DisplayWithInput(props: propsType) {
     }
 
     return (
-        <Card className={classes.root}>
-           <Typography variant='h3'>Counter</Typography>
+        <Card className={classes.root} elevation={2}>
+           <CardHeader title='Counter'/>
             <CardContent>
                 <InputComponent />
             </CardContent>

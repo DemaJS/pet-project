@@ -11,7 +11,7 @@ export function Counter() {
     const [maxValue, setMaxValue] = useState(0)
 
     return (
-        <Grid container spacing={3}>
+        <Grid container spacing={3} style={{margin:'20px'}}>
             <Grid item >
                 <Display number = {number} setNumber = {setNumber}
                          maxValue={maxValue} setMaxValue={setMaxValue}/>

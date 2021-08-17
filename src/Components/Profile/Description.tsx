@@ -1,8 +1,9 @@
 import React from "react";
-import {Card, Checkbox, Divider, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
+import {Card, Checkbox, Chip, List, ListItem, ListItemIcon, ListItemText} from "@material-ui/core";
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import CodeIcon from '@material-ui/icons/Code';
 import Grid from "@material-ui/core/Grid";
+import DoneIcon from '@material-ui/icons/Done';
 
 export function Description() {
 
@@ -10,8 +11,8 @@ export function Description() {
 
         <Grid container spacing={2}>
 
-            <Grid item xs={6}>
-                <Card elevation={2}>
+            <Grid item xs={12} lg={6}>
+                <Card elevation={2} style={{border: 'solid 1px #3f51b5'}}>
                     <List dense={true}>
                         <ListItem>
                             <ListItemIcon>
@@ -24,8 +25,8 @@ export function Description() {
                 </Card>
             </Grid>
 
-            <Grid item xs={6}>
-                <Card elevation={2}>
+            <Grid item xs={12} lg={6}>
+                <Card elevation={2} style={{border: 'solid 1px #3f51b5'}}>
                     <List dense={true}>
                         <ListItem>
                             <ListItemIcon>
@@ -36,9 +37,25 @@ export function Description() {
                         <ListItemText>
                             <List dense={true}>
                                 <ListItem>
-                                    <ListItemText primary="React"/>
-                                    <ListItemText primary="JavaScript"/>
-                                    <ListItemText primary="TypeScript"/>
+                                    <Chip
+                                        icon={<DoneIcon/>}
+                                        label="JavaScript"
+                                        variant="outlined"
+                                    />
+                                </ListItem>
+                                <ListItem>
+                                    <Chip
+                                        icon={<DoneIcon/>}
+                                        label="TypeScript"
+                                        variant="outlined"
+                                    />
+                                </ListItem>
+                                <ListItem>
+                                    <Chip
+                                        icon={<DoneIcon/>}
+                                        label="React"
+                                        variant="outlined"
+                                    />
                                 </ListItem>
                             </List>
                         </ListItemText>

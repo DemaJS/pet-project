@@ -9,6 +9,8 @@ import {AppStateType} from "../../State/Store";
 import {setProfileThunk} from "../../Reducers/Profile-reducer";
 import ava from './../../Images/atom.png'
 import {Contacts} from "./Contacts";
+import Grid from "@material-ui/core/Grid";
+import {NavLink} from 'react-router-dom';
 
 
 type propsType = {
@@ -31,33 +33,44 @@ export function MyProfile(props: propsType) {
 
 
     return (
-        <>
-            <Card elevation={2} >
-                <CardHeader
-                    style={{backgroundColor:'#dce6f1'}}
-                    avatar={
-                        <Avatar aria-label="recipe" style={{height: '100px', width: '100px'}}
-                                src={ava}>
-                        </Avatar>
-                    }
-                    title={userName}
-                    subheader='Front-end developer'
-                />
-            </Card>
 
-            <Card style={{marginTop: '20px',backgroundColor:'#dce6f1'}} elevation={2}>
-                <CardHeader title='Description:'/>
-                <CardContent>
-                    <Description/>
-                </CardContent>
-            </Card>
+        <Grid container>
 
-            <Card style={{marginTop: '20px', backgroundColor:'#dce6f1'}} elevation={2}>
-                <CardHeader title='Contacts:'/>
-                <CardContent>
-                    <Contacts/>
-                </CardContent>
-            </Card>
-        </>
-    );
+            <Grid item xs={12}>
+
+                <Card elevation={2}>
+                    <CardHeader
+                        avatar={
+                                <Avatar aria-label="recipe" style={{height: '100px', width: '100px'}}
+                                        src={ava}>
+                                </Avatar>
+                        }
+                        title={userName}
+                        subheader='Front-end developer'
+                    />
+                </Card>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Card style={{marginTop: '20px'}} elevation={2}>
+                    <CardHeader title='Description:'/>
+                    <CardContent>
+                        <Description/>
+                    </CardContent>
+                </Card>
+            </Grid>
+
+            <Grid item xs={12}>
+                <Card style={{marginTop: '20px'}} elevation={2}>
+                    <CardHeader title='Contacts:'/>
+                    <CardContent>
+                        <Contacts/>
+                    </CardContent>
+                </Card>
+            </Grid>
+
+        </Grid>
+
+    )
+        ;
 }

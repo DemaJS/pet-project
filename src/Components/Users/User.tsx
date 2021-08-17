@@ -10,14 +10,14 @@ import Avatar from "@material-ui/core/Avatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import List from "@material-ui/core/List";
-
+import { NavLink } from 'react-router-dom';
 
 
 type propsType = {
     name: string
     status: string
     photo: string
-    id:number
+    id: number
 }
 
 
@@ -27,10 +27,12 @@ export function User(props: propsType) {
         <List key={props.id}>
             <ListItem alignItems="flex-start">
                 <ListItemAvatar>
-                    <Avatar alt="Remy Sharp"
-                            src={props.photo ? props.photo : ava}
-                            style={{width:'50px',height:'50px'}}
-                    />
+                    <NavLink to={'profile/' + props.id}>
+                        <Avatar alt="Remy Sharp"
+                                src={props.photo ? props.photo : ava}
+                                style={{width: '50px', height: '50px'}}
+                        />
+                    </NavLink>
                 </ListItemAvatar>
                 <ListItemText
                     primary={props.name}
@@ -54,7 +56,7 @@ export function User(props: propsType) {
                     <PersonAddIcon/>
                 </IconButton>
             </ListItem>
-            <Divider variant="inset" component="li" />
+            <Divider variant="inset" component="li"/>
         </List>
     )
 }

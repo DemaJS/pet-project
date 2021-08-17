@@ -64,7 +64,7 @@ export function Display(props: propsType) {
     }
 
     return (
-        <Card className={classes.root}>
+        <Card className={classes.root} elevation={2}>
             <CardActionArea>
                 <CardContent>
                     <Typography variant='h3'>

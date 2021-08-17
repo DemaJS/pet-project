@@ -16,8 +16,8 @@ export const Contacts = () => {
 
         <Grid container spacing={2}>
 
-            <Grid item xs={6}>
-                <Card elevation={2}>
+            <Grid item xs={12} lg={6}>
+                <Card elevation={2} style={{border:'solid 1px #3f51b5'}}>
                     <List dense={true}>
                         <ListItem>
                             <ListItemIcon>
@@ -47,8 +47,8 @@ export const Contacts = () => {
                 </Card>
             </Grid>
 
-            <Grid item xs={6}>
-                <Card elevation={2}>
+            <Grid item xs={12} lg={6}>
+                <Card elevation={2} style={{border:'solid 1px #3f51b5'}}>
                     <List dense={true}>
                         <ListItem>
                             <ListItemIcon>

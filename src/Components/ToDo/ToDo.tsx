@@ -80,7 +80,7 @@ function ToDo() {
 
     return (
 
-        <>
+        <div style={{margin:'30px'}}>
             {loading === 'loading' && <LinearProgress/>}
 
             <ErrorSnackbar/>
@@ -115,7 +115,7 @@ function ToDo() {
                     )
                 }
             </Grid>
-        </>
+        </div>
     )
 }
 
