@@ -6,8 +6,6 @@ import GitHubIcon from '@material-ui/icons/GitHub';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import LanguageIcon from '@material-ui/icons/Language';
 import YouTubeIcon from '@material-ui/icons/YouTube';
-import ContactsIcon from '@material-ui/icons/Contacts';
-import LocalMallIcon from '@material-ui/icons/LocalMall';
 import Grid from "@material-ui/core/Grid";
 
 export const Contacts = () => {
@@ -22,12 +20,6 @@ export const Contacts = () => {
                         <ListItem>
                             <ListItemIcon>
                                 <GitHubIcon/>
-                            </ListItemIcon>
-                            <ListItemText primary="https:"/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <ContactsIcon/>
                             </ListItemIcon>
                             <ListItemText primary="https:"/>
                         </ListItem>
@@ -65,12 +57,6 @@ export const Contacts = () => {
                         <ListItem>
                             <ListItemIcon>
                                 <YouTubeIcon/>
-                            </ListItemIcon>
-                            <ListItemText primary="https:"/>
-                        </ListItem>
-                        <ListItem>
-                            <ListItemIcon>
-                                <LocalMallIcon/>
                             </ListItemIcon>
                             <ListItemText primary="https:"/>
                         </ListItem>

@@ -19,6 +19,7 @@ import {
 } from "../../Reducers/ToDoTasks-Reducer";
 import {statusType} from "../../Reducers/App-reducer";
 import {ErrorSnackbar} from "../Utils/Error-Component";
+import {Redirect} from "react-router-dom";
 
 
 export type todoListsType = {
@@ -77,6 +78,13 @@ function ToDo() {
     const changeTaskName = useCallback((todoID: string, taskID: string, taskName: string) => {
         dispatch(changeTaskNameAC(todoID,taskID,taskName))
     },[dispatch])
+
+    // @ts-ignore
+    const login = useSelector<AppStateType, string>((state) => state.auth.login)
+
+    if(!login) {
+        return <Redirect to="/login" />
+    }
 
     return (
 

@@ -8,6 +8,7 @@ import {AppStateType} from "../../State/Store";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {statusType} from "../../Reducers/App-reducer";
 import Grid from "@material-ui/core/Grid";
+import {Redirect} from "react-router-dom";
 
 
 export function Users() {
@@ -28,6 +29,12 @@ export function Users() {
         dispatch(setUsersThunk(pageSize, value))
     };
 
+    // @ts-ignore
+    const login = useSelector<AppStateType, string>((state) => state.auth.login)
+
+    if(!login) {
+        return <Redirect to="/login" />
+    }
 
     return (
         <Grid item xs={12}>

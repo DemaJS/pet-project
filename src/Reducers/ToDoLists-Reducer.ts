@@ -2,7 +2,7 @@ import {filterType, todoListsType} from "../Components/ToDo/ToDo";
 import {v1} from "uuid";
 import axios from "axios";
 import {Dispatch} from "redux";
-import {setErrorAC, setStatusAC, statusType} from "./App-reducer";
+import {setErrorAC, setStatusAC} from "./App-reducer";
 
 export type addToDoType = {
     type: 'ADD_TODO'

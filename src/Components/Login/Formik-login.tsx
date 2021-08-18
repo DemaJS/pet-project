@@ -8,8 +8,11 @@ import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {loginThunk} from "../../Reducers/Auth-reducer";
+import img from './../../Images/welcome.jpg'
+import {AppStateType} from "../../State/Store";
+import {Redirect} from "react-router-dom";
 
 
 export const SignupForm = () => {
@@ -25,11 +28,22 @@ export const SignupForm = () => {
             dispatch(loginThunk(values.email, values.password))
         },
     });
+
+    // @ts-ignore
+    const login = useSelector<AppStateType, string>((state) => state.auth.login)
+
+    if(login) {
+        return <Redirect to="/profile" />
+    }
+
     return (
-        <Grid container justify="center">
-            <Grid item xs={4}>
+        <Grid container justify="center" spacing={2} >
+            <Grid item xs={12} lg={6}>
+                    <img src={img} style={{maxWidth:'100%'}}/>
+            </Grid>
+            <Grid item xs={12} lg={4}>
                 <form onSubmit={formik.handleSubmit}>
-                    <FormControl>
+                    <FormControl style={{marginLeft:'20px'}}>
                         <FormLabel>
                             <p>To log in get registered{' '}
                                 <a href={'https://social-network.samuraijs.com/'}
