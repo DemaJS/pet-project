@@ -10,17 +10,17 @@ import {profileReducer} from "../Reducers/Profile-reducer";
 
 const rootReducer = combineReducers({
     counter: counterReducer,
-    lists:ToDoListsReducer,
-    tasks:ToDoTaskReducer,
-    users:usersReducer,
-    app:appReducer,
-    auth:authReducer,
-    profile:profileReducer
+    lists: ToDoListsReducer,
+    tasks: ToDoTaskReducer,
+    users: usersReducer,
+    app: appReducer,
+    auth: authReducer,
+    profile: profileReducer
 })
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-export const store = createStore(rootReducer,  applyMiddleware(thunk))
+export const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
 // @ts-ignore

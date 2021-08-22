@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import axios from "axios";
-import {setStatusAC} from "./App-reducer";
+import {setErrorAC, setStatusAC} from "./App-reducer";
 
 type photosType = {
     small: string
@@ -18,8 +18,10 @@ export type userItemType = {
 export type setCurrentPageType = ReturnType<typeof setCurrentPageAC>
 export type setTotalType = ReturnType<typeof setTotalAC>
 export type addUsersType = ReturnType<typeof setUsersAC>
+export type followUserType = ReturnType<typeof followUserAC>
+export type unfollowUserType = ReturnType<typeof unfollowUserAC>
 
-type actionType = addUsersType | setTotalType | setCurrentPageType
+type actionType = addUsersType | setTotalType | setCurrentPageType | followUserType | unfollowUserType
 
 type initialStateType = typeof initialState
 
@@ -49,6 +51,26 @@ export const usersReducer = (state: initialStateType = initialState, action: act
                 ...state,
                 currentPage: action.page
             }
+        case "FOLLOW_USER":
+            return {
+                ...state,
+                users:state.users.map(el => {
+                    if (el.id === action.userId) {
+                       return {...el, followed:true}
+                    }
+                    return el
+                })
+            }
+        case "UNFOLLOW_USER":
+            return {
+                ...state,
+                users:state.users.map(el => {
+                    if (el.id === action.userId) {
+                        return {...el, followed:false}
+                    }
+                    return el
+                })
+            }
         default:
             return state
     }
@@ -62,6 +84,12 @@ export const setTotalAC = (total: number) => {
 }
 export const setCurrentPageAC = (page: number) => {
     return {type: 'SET_CURRENT_PAGE', page} as const
+}
+export const followUserAC = (userId: number) => {
+    return {type: 'FOLLOW_USER', userId} as const
+}
+export const unfollowUserAC = (userId: number) => {
+    return {type: 'UNFOLLOW_USER', userId} as const
 }
 
 export const setUsersThunk = (pageSize: number, currentPage: number) => {
@@ -80,5 +108,39 @@ export const setUsersThunk = (pageSize: number, currentPage: number) => {
                 dispatch(setCurrentPageAC(currentPage))
                 dispatch(setStatusAC('succeeded'))
             })
+    }
+}
+
+export const followUserThunk = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
+            {
+                withCredentials: true,
+                headers: {
+                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                }
+            }
+        ).then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(followUserAC(userId))
+            }
+        })
+    }
+}
+
+export const unfollowUserThunk = (userId: number) => {
+    return (dispatch: Dispatch) => {
+        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
+            {
+                withCredentials: true,
+                headers: {
+                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                }
+            }
+        ).then((response) => {
+            if (response.data.resultCode === 0) {
+                dispatch(unfollowUserAC(userId))
+            }
+        })
     }
 }

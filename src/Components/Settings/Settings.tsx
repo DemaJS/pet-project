@@ -17,10 +17,7 @@ import {ErrorSnackbar} from "../Utils/Error-Component";
 type contactsType = {
     github: string
     facebook: string
-    instagram: string
-    twitter: string
     website: string
-    youtube: string
 }
 
 type valuesType = {
@@ -42,10 +39,7 @@ export const Settings = () => {
             contacts: {
                 github: '',
                 facebook: '',
-                instagram: '',
-                twitter: '',
                 website: '',
-                youtube: ''
             }
         },
         onSubmit: (values:valuesType) => {
@@ -116,35 +110,11 @@ export const Settings = () => {
                                 />
                                 <TextField
                                     size='small'
-                                    label="instagram"
-                                    margin="normal"
-                                    name="contacts.instagram"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.contacts.instagram}
-                                />
-                                <TextField
-                                    size='small'
-                                    label="twitter"
-                                    margin="normal"
-                                    name="contacts.twitter"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.contacts.twitter}
-                                />
-                                <TextField
-                                    size='small'
                                     label="website"
                                     margin="normal"
                                     name="contacts.website"
                                     onChange={formik.handleChange}
                                     value={formik.values.contacts.website}
-                                />
-                                <TextField
-                                    size='small'
-                                    label="youtube"
-                                    margin="normal"
-                                    name="contacts.youtube"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.contacts.youtube}
                                 />
                                 <Button size={"medium"} type={'submit'} variant={'outlined'}
                                         color={'primary'}>Save</Button>

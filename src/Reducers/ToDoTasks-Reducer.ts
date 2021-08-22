@@ -1,6 +1,6 @@
 import {tasksType, taskType} from "../Components/ToDo/ToDo";
 import {v1} from "uuid";
-import {addToDoType, changeToDoStatusAC, setToDoType} from "./ToDoLists-Reducer";
+import {addToDoType, setToDoType} from "./ToDoLists-Reducer";
 import axios from "axios";
 import {Dispatch} from "redux";
 import {setErrorAC, setStatusAC} from "./App-reducer";
@@ -136,15 +136,13 @@ export const addTaskThunk = (todoID: string, title: string) => {
                 dispatch(addTaskAC(todoID, title))
                 dispatch(setStatusAC('succeeded'))
             } else {
-                {
+
                     if (response.data.messages.length) {
                         dispatch(setErrorAC(response.data.messages[0]))
                     } else {
                         dispatch(setErrorAC('Some error occurred'))
                     }
                     dispatch(setStatusAC('failed'))
-                }
-
             }
         })
             .catch(error => {

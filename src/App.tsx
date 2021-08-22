@@ -13,7 +13,6 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import SettingsIcon from '@material-ui/icons/Settings';
 import {Counter} from "./Components/Counter/Counter";
-import ToDo from "./Components/ToDo/ToDo";
 import {Profile} from "./Components/Profile/Profile";
 import {Users} from "./Components/Users/Users";
 import {SignupForm} from "./Components/Login/Formik-login";
@@ -21,14 +20,14 @@ import {logoutThunk, setAuthThunk} from "./Reducers/Auth-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import Grid from "@material-ui/core/Grid";
 import {Settings} from "./Components/Settings/Settings";
+import {AppStateType} from "./State/Store";
+import {ToDo} from "./Components/ToDo/ToDo";
 
 
 export function App() {
 
     const dispatch = useDispatch()
-
-    // @ts-ignore
-    const login = useSelector<AppStateType, string>((state) => state.auth.login)
+    const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
 
     useEffect(() => {
         dispatch(setAuthThunk())
@@ -37,7 +36,6 @@ export function App() {
     const logoutHandle = () => {
         dispatch(logoutThunk())
     }
-
 
     return (
         <Grid container style={{flexGrow: 1}}>

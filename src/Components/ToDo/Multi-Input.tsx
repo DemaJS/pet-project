@@ -1,5 +1,7 @@
 import React, {ChangeEvent, useCallback, useState} from "react";
-import {IconButton, InputAdornment, TextField} from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import TextField from "@material-ui/core/TextField";
 import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import LibraryAddIcon from '@material-ui/icons/LibraryAdd';
 
@@ -8,11 +10,7 @@ type propsType = {
     addToDo: (title: string) => void
 }
 
-
-
 export const MultiInput = React.memo((props:propsType) => {
-
-    console.log('INPUT')
 
     const [toDo, setToDo] = useState('')
 

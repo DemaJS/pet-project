@@ -36,11 +36,11 @@ export const ToDoListsReducer = (state: Array<todoListsType> = initialState, act
                 return {
                     ...el,
                     filter: 'all',
-                    entityStatus:false
+                    entityStatus: false
                 }
             })
         case "ADD_TODO":
-            let newToDo = {id: action.id, title: action.title, filter: 'all',  entityStatus:false}
+            let newToDo = {id: action.id, title: action.title, filter: 'all', entityStatus: false}
             return [newToDo, ...state];
         case "DELETE_TODO":
             return state.filter(el => el.id !== action.id);
@@ -52,8 +52,8 @@ export const ToDoListsReducer = (state: Array<todoListsType> = initialState, act
             return [...state];
         case "CHANGE_TODO_STATUS":
             return state.map(el => {
-                if(el.id === action.todoID) {
-                    return {...el, entityStatus:action.status}
+                if (el.id === action.todoID) {
+                    return {...el, entityStatus: action.status}
                 } else return el
             })
         default:
@@ -107,16 +107,12 @@ export const addToDoThunk = (title: string) => {
                 dispatch(addToDoAC(title))
                 dispatch(setStatusAC('succeeded'))
             } else {
-                {
-                    debugger
-                    if (response.data.messages.length) {
-                        dispatch(setErrorAC(response.data.messages[0]))
-                    } else {
-                        dispatch(setErrorAC('Some error occurred'))
-                    }
-                    dispatch(setStatusAC('failed'))
+                if (response.data.messages.length) {
+                    dispatch(setErrorAC(response.data.messages[0]))
+                } else {
+                    dispatch(setErrorAC('Some error occurred'))
                 }
-
+                dispatch(setStatusAC('failed'))
             }
 
         })
@@ -126,7 +122,7 @@ export const addToDoThunk = (title: string) => {
 export const deleteToDoThunk = (id: string) => {
     return (dispatch: Dispatch) => {
         dispatch(setStatusAC('loading'))
-        dispatch(changeToDoStatusAC(id,true))
+        dispatch(changeToDoStatusAC(id, true))
         axios.delete(`https://social-network.samuraijs.com/api/1.1//todo-lists/${id}`,
             {
                 withCredentials: true,
@@ -137,7 +133,7 @@ export const deleteToDoThunk = (id: string) => {
             if (res.data.resultCode === 0) {
                 dispatch(deleteToDoAC(id))
                 dispatch(setStatusAC('succeeded'))
-                dispatch(changeToDoStatusAC(id,false))
+                dispatch(changeToDoStatusAC(id, false))
             }
 
         })

@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect} from 'react'
 import {MultiInput} from "./Multi-Input";
-import ToDoList from "./ToDo-List";
-import {Grid} from "@material-ui/core";
+import Grid from "@material-ui/core/Grid";
 import LinearProgress from '@material-ui/core/LinearProgress'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../State/Store";
@@ -20,6 +19,7 @@ import {
 import {statusType} from "../../Reducers/App-reducer";
 import {ErrorSnackbar} from "../Utils/Error-Component";
 import {Redirect} from "react-router-dom";
+import {ToDoList} from "./ToDo-List";
 
 
 export type todoListsType = {
@@ -28,7 +28,6 @@ export type todoListsType = {
     filter: filterType
     entityStatus: boolean
 }
-
 export type taskType = {
     id: string
     title: string
@@ -40,7 +39,7 @@ export type tasksType = {
 }
 export type filterType = 'all' | 'active' | 'completed'
 
-function ToDo() {
+export function ToDo() {
 
     const todoLists = useSelector<AppStateType,Array<todoListsType>>(state => state.lists)
     const tasks = useSelector<AppStateType,tasksType>(state => state.tasks)
@@ -79,8 +78,7 @@ function ToDo() {
         dispatch(changeTaskNameAC(todoID,taskID,taskName))
     },[dispatch])
 
-    // @ts-ignore
-    const login = useSelector<AppStateType, string>((state) => state.auth.login)
+    const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
 
     if(!login) {
         return <Redirect to="/login" />
@@ -126,5 +124,3 @@ function ToDo() {
         </div>
     )
 }
-
-export default ToDo

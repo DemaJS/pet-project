@@ -5,7 +5,7 @@ const initialState = {
 }
 type initialStateType = typeof initialState
 
-export const counterReducer = (state:initialStateType = initialState , action: actionType): initialStateType => {
+export const counterReducer = (state: initialStateType = initialState, action: actionType): initialStateType => {
     switch (action.type) {
         case "INC_VALUE":
             return {
@@ -32,15 +32,16 @@ export const counterReducer = (state:initialStateType = initialState , action: a
                 ...state,
                 maxValue: action.maxValue
             }
-        default: return state
+        default:
+            return state
     }
 }
 
 export const incValueAC = () => ({type: 'INC_VALUE'} as const)
-export const resetValueAC = () => ({type:'RESET_VALUE'} as const)
-export const setStartValueAC = (startValue:number) => ({type:'SET_START_VALUE',startValue} as const)
-export const setMaxValueAC = (maxValue: number) => ({type:'SET_MAX_VALUE',maxValue} as const)
-export const setValueAC = (newValue:number) => ({type:'SET_VALUE', newValue} as const)
+export const resetValueAC = () => ({type: 'RESET_VALUE'} as const)
+export const setStartValueAC = (startValue: number) => ({type: 'SET_START_VALUE', startValue} as const)
+export const setMaxValueAC = (maxValue: number) => ({type: 'SET_MAX_VALUE', maxValue} as const)
+export const setValueAC = (newValue: number) => ({type: 'SET_VALUE', newValue} as const)
 
 export type incValueActionType = ReturnType<typeof incValueAC>
 export type resetValueActionType = ReturnType<typeof resetValueAC>

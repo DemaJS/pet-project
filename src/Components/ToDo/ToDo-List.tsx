@@ -1,8 +1,13 @@
 import React, {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {filterType, taskType} from "./ToDo";
-import {Button, ButtonGroup, Checkbox, IconButton, Paper, TextField} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Paper from "@material-ui/core/Paper";
+import TextField from "@material-ui/core/TextField";
 import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
-import {Delete} from "@material-ui/icons";
+import Delete from "@material-ui/icons/Delete";
 import {EditableSpan} from "./Editable-Span";
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import {setTasksThunk} from "../../Reducers/ToDoTasks-Reducer";
@@ -22,9 +27,7 @@ type propsType = {
     entityStatus:boolean
 }
 
- const ToDoList = React.memo((props: propsType) => {
-
-    console.log('TODO')
+ export const ToDoList = React.memo((props: propsType) => {
 
     const dispatch = useDispatch()
 
@@ -124,4 +127,3 @@ type propsType = {
     )
 })
 
-export default ToDoList

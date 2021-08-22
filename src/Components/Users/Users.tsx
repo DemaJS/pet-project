@@ -9,6 +9,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import {statusType} from "../../Reducers/App-reducer";
 import Grid from "@material-ui/core/Grid";
 import {Redirect} from "react-router-dom";
+import {ErrorSnackbar} from "../Utils/Error-Component";
 
 
 export function Users() {
@@ -24,13 +25,11 @@ export function Users() {
         dispatch(setUsersThunk(pageSize, currentPage))
     }, [])
 
-
     const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
         dispatch(setUsersThunk(pageSize, value))
     };
 
-    // @ts-ignore
-    const login = useSelector<AppStateType, string>((state) => state.auth.login)
+    const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
 
     if(!login) {
         return <Redirect to="/login" />
@@ -52,7 +51,8 @@ export function Users() {
                 <Card elevation={2} style={styleCard}>
                     {
                         users.map(el => {
-                            return <User name={el.name} status={el.status} photo={el.photos.large} id={el.id}/>
+                            return <User name={el.name} status={el.status}
+                                         photo={el.photos.large} id={el.id} followed = {el.followed}/>
                         })
                     }
                 </Card>

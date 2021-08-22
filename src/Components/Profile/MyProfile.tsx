@@ -31,9 +31,7 @@ type propsType = {
 
 export function MyProfile(props: propsType) {
 
-
     const meID = useSelector<AppStateType, number>((state) => state.auth.id!)
-
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -43,93 +41,105 @@ export function MyProfile(props: propsType) {
     const userName = useSelector<AppStateType, string>((state) => state.profile.profile.fullName)
     const userProfile = useSelector<AppStateType, profileType>((state) => state.profile.profile)
 
-
     return (
 
         <Grid container spacing={2}>
 
             <Grid item xs={12}>
-
-                <Card elevation={2} style={{borderRadius:'20px',backgroundColor:'#f3f2ef'}}>
-                        <CardHeader
-                            avatar={
-                                <Avatar
-                                    style={{height:'100px',width:'100px'}}
-                                    aria-label="recipe"
-                                    src={userProfile
+                <Card elevation={2} style={{borderRadius: '20px', backgroundColor: '#f3f2ef'}}>
+                    <CardHeader
+                        avatar={
+                            <Avatar
+                                style={{height: '100px', width: '100px'}}
+                                aria-label="recipe"
+                                src={userProfile
                                     ? userProfile.photos?.large
-                                    : ava} />
-                            }
-                            title={userName}
-                            subheader={userProfile.aboutMe}
-                        />
-                        <CardContent>
-                            <Typography variant="body2" color="textSecondary" component="p">
-                                Имею опыт создания веб-приложений со стеком React-Redux-TypeScript.
-                                Открыт для ваших предложений.
-                                <IconButton aria-label="settings">
-                                    <CreateIcon />
-                                </IconButton>
-                            </Typography>
-                            <Typography >
-                                <div style={{display:'flex'}}>
-                                    <WorkOutlineIcon/>
-                                    &nbsp;
-                                    <span>Open to work :</span>
-                                    &nbsp;
-                                    <span>{userProfile.lookingForAJob ? <DoneIcon/> : <ClearIcon/>}</span>
-                                </div>
-                            </Typography>
-                            <div style={{display:'flex'}}>
-                                <span><PlaylistAddCheckIcon/></span>
+                                    : ava}/>
+                        }
+                        title={userName}
+                        subheader={userProfile.aboutMe}
+                    />
+                    <CardContent>
+                        <Typography variant="body2" color="textSecondary" component="p">
+                            Имею опыт создания веб-приложений со стеком React-Redux-TypeScript.
+                            Открыт для ваших предложений.
+                            <IconButton aria-label="settings">
+                                <CreateIcon/>
+                            </IconButton>
+                        </Typography>
+                        <Typography>
+                            <div style={{display: 'flex'}}>
+                                <WorkOutlineIcon/>
                                 &nbsp;
-                            <Typography>
-                               Skills: {userProfile.lookingForAJobDescription}
-                            </Typography>
+                                &nbsp;
+                                <span>Open to work :</span>
+                                &nbsp;
+                                <span>{userProfile.lookingForAJob ? <DoneIcon/> : <ClearIcon/>}</span>
                             </div>
-                        </CardContent>
+                        </Typography>
+                        <div style={{display: 'flex'}}>
+                            <span><PlaylistAddCheckIcon/></span>
+                            &nbsp;
+                            &nbsp;
+                            <Typography>
+                                Skills: {userProfile.lookingForAJobDescription}
+                            </Typography>
+                        </div>
+                    </CardContent>
                 </Card>
             </Grid>
+
             <Grid item xs={12}>
-                <Card elevation={2} style={{borderRadius:'20px',backgroundColor:'#f3f2ef'}}>
+                <Card elevation={2} style={{borderRadius: '20px', backgroundColor: '#f3f2ef'}}>
                     <CardHeader title='Contacts'/>
                     <List>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
-                               <GitHubIcon/>
+                                <GitHubIcon/>
                             </ListItemAvatar>
                             <ListItemText
-                                primary="GitHub"
+                                primary=
+                                    {userProfile.contacts?.github
+                                        ? <a href={'https://github.com/DemaJS'}>www.github.com</a>
+                                        : "GitHub"}
                             />
                         </ListItem>
-                        <Divider variant="inset" component="li" />
+                        <Divider variant="inset" component="li"/>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                                 <LinkedInIcon/>
                             </ListItemAvatar>
                             <ListItemText
-                                primary={<a href={'https://www.linkedin.com/in/victor-demin-react/'}>www.linkedin.com</a>}
+                                primary=
+                                    {userProfile.contacts?.github
+                                        ?
+                                        <a href={'https://www.linkedin.com/in/victor-demin-react/'}>www.linkedin.com</a>
+                                        : "LinkedIn"}
                             />
                         </ListItem>
-                        <Divider variant="inset" component="li" />
+                        <Divider variant="inset" component="li"/>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                                 <HttpIcon/>
                             </ListItemAvatar>
                             <ListItemText
-                                primary="WebSite"
+                                primary={userProfile.contacts?.github
+                                    ? <a href={'https://demajs.github.io/pet-project/'}>www.website.com</a>
+                                    : "WebSite"}
                             />
                         </ListItem>
-                        <Divider variant="inset" component="li" />
+                        <Divider variant="inset" component="li"/>
                         <ListItem alignItems="flex-start">
                             <ListItemAvatar>
                                 <FacebookIcon/>
                             </ListItemAvatar>
                             <ListItemText
-                                primary="Facebook"
+                                primary={userProfile.contacts?.github
+                                    ? <a href={'https://ru-ru.facebook.com/'}>www.facebook.com</a>
+                                    : "Facebook"}
                             />
                         </ListItem>
-                        <Divider variant="inset" component="li" />
+                        <Divider variant="inset" component="li"/>
                     </List>
                 </Card>
             </Grid>
@@ -137,5 +147,4 @@ export function MyProfile(props: propsType) {
         </Grid>
 
     )
-
 }
