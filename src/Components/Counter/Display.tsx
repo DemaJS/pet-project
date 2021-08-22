@@ -63,8 +63,13 @@ export function Display(props: propsType) {
         /*props.setNumber(0)*/
     }
 
+    const styleCard = {
+        backgroundColor:'#f3f2ef',
+        borderRadius:'15px',
+    }
+
     return (
-        <Card className={classes.root} elevation={2}>
+        <Card className={classes.root} elevation={2} style={styleCard}>
             <CardActionArea>
                 <CardContent>
                     <Typography variant='h3'>
@@ -77,6 +82,7 @@ export function Display(props: propsType) {
             </CardActionArea>
             <CardActions>
                 <Button
+                    style={{borderRadius:'15px'}}
                     onClick={onClickHandler}
                     variant="outlined"
                     color="primary"
@@ -85,6 +91,7 @@ export function Display(props: propsType) {
                     INC
                 </Button>
                 <Button
+                    style={{borderRadius:'15px'}}
                     onClick={resetOnClick}
                     variant="outlined"
                     color="secondary"

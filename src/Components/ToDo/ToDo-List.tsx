@@ -55,8 +55,14 @@ type propsType = {
         filterTasks = filterTasks.filter(t => t.isDone)
     }
 
+     const styleCard = {
+         backgroundColor:'#f3f2ef',
+         borderRadius:'15px',
+         padding:'10px'
+     }
+
     return (
-        <Paper style={{padding:'10px'}} elevation={3}>
+        <Paper elevation={3} style={styleCard}>
 
             <h3>
                 {props.title ? `${props.title}` : 'ToDo'}

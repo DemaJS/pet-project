@@ -19,7 +19,7 @@ export function Counter() {
     }
 
     return (
-        <Grid container spacing={3} style={{margin:'20px'}}>
+        <Grid container spacing={3} justify="center" style={{margin:'20px'}}>
             <Grid item >
                 <Display number = {number} setNumber = {setNumber}
                          maxValue={maxValue} setMaxValue={setMaxValue}/>

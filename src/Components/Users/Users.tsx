@@ -36,6 +36,12 @@ export function Users() {
         return <Redirect to="/login" />
     }
 
+    const styleCard = {
+        backgroundColor:'#f3f2ef',
+        borderRadius:'15px',
+        margin: '10px'
+    }
+
     return (
         <Grid item xs={12}>
             {loading === 'loading' && <LinearProgress/>}
@@ -43,7 +49,7 @@ export function Users() {
                 <Pagination count={total} variant="outlined" shape="rounded" page={currentPage}
                             onChange={handleChange} style={{padding: '10px'}}/>
 
-                <Card elevation={2} style={{margin: '10px'}}>
+                <Card elevation={2} style={styleCard}>
                     {
                         users.map(el => {
                             return <User name={el.name} status={el.status} photo={el.photos.large} id={el.id}/>

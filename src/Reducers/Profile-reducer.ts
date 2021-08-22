@@ -1,5 +1,5 @@
-import {Dispatch} from "redux";
 import axios from "axios";
+import {setErrorAC, setStatusAC} from "./App-reducer";
 
 type contactsType = {
     github: string
@@ -19,6 +19,7 @@ type photosType = {
 
 export type profileType = {
     userId: number
+    aboutMe:string
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
@@ -69,7 +70,7 @@ export const setProfileThunk = (userID: number) => {
 export const updateProfileThunk = (profile: any) => {
     return (dispatch:any, getState:any) => {
         let userId = getState().auth.userId
-        axios.put(` https://social-network.samuraijs.com/api/1.0/profile`,{profile},
+        axios.put(` https://social-network.samuraijs.com/api/1.0/profile`, {...profile},
             {
                 withCredentials: true,
                 headers: {
@@ -78,6 +79,13 @@ export const updateProfileThunk = (profile: any) => {
             }).then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(setProfileThunk(userId))
+            } else {
+                if (response.data.messages.length) {
+                    dispatch(setErrorAC(response.data.messages[0]))
+                } else {
+                    dispatch(setErrorAC('Some error occurred'))
+                }
+                dispatch(setStatusAC('failed'))
             }
         })
     }

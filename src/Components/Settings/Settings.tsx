@@ -11,6 +11,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import {useDispatch} from "react-redux";
 import Card from "@material-ui/core/Card";
 import { updateProfileThunk} from "../../Reducers/Profile-reducer";
+import {ErrorSnackbar} from "../Utils/Error-Component";
 
 
 type contactsType = {
@@ -57,13 +58,16 @@ export const Settings = () => {
 
     return (
         <Grid container justify="center">
+            <ErrorSnackbar/>
             <Grid item xs={12} lg={5}>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl fullWidth>
                         <FormLabel>
                             <h2>Change description</h2>
                         </FormLabel>
-                        <Card style={{padding: '20px', marginBottom: '10px'}} elevation={2}>
+                        <Card
+                            style={{padding: '20px', marginBottom: '10px', borderRadius:'20px',backgroundColor:'#f3f2ef'}}
+                            elevation={2}>
                             <FormGroup>
                                 <FormControlLabel
                                     label={'Looking for a job'}

@@ -77,14 +77,21 @@ export function DisplayWithInput(props: propsType) {
         }
     }
 
+
+    const styleCard = {
+        backgroundColor:'#f3f2ef',
+        borderRadius:'15px',
+    }
+
     return (
-        <Card className={classes.root} elevation={2}>
+        <Card className={classes.root} elevation={2} style={styleCard}>
            <CardHeader title='Counter'/>
             <CardContent>
                 <InputComponent />
             </CardContent>
             <CardActions>
                 <Button
+                    style={{borderRadius:'15px'}}
                     onClick={onSetValuesFromStorage}
                     variant="outlined"
                     color="primary"

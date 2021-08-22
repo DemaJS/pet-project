@@ -41,7 +41,7 @@ const [newPost,setNewPost] = useState('')
     }
 
     return (
-        <Card elevation={2}>
+        <Card elevation={2} style={{borderRadius:'20px',backgroundColor:'#f3f2ef'}}>
             <div style={{padding:'10px 10px 10px 10px'}}>
                 <TextField
                     onChange={onChangeHandler}

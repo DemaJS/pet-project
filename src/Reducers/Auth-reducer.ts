@@ -10,12 +10,12 @@ const initialState = {
     id: null as number | null,
     email: null as string | null,
     login: null as string | null,
-    isAuth: null as string | null
+    isAuth: false
 }
 
 type initialStateType = typeof initialState
 
-export const authReducer = (state: initialStateType = initialState, action: actionType) => {
+export const authReducer = (state: initialStateType = initialState, action: actionType): initialStateType => {
     switch (action.type) {
         case "SET_AUTH":
             return {

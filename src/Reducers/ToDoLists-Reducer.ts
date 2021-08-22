@@ -108,6 +108,7 @@ export const addToDoThunk = (title: string) => {
                 dispatch(setStatusAC('succeeded'))
             } else {
                 {
+                    debugger
                     if (response.data.messages.length) {
                         dispatch(setErrorAC(response.data.messages[0]))
                     } else {
