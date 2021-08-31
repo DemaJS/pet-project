@@ -13,24 +13,51 @@ import {loginThunk} from "../../Reducers/Auth-reducer";
 import img from './../../Images/welcome.jpg'
 import {AppStateType} from "../../State/Store";
 import {Redirect} from "react-router-dom";
+import Alert from '@material-ui/lab/Alert';
+
+
+type initialValues = {
+    password:string
+    email:string
+}
 
 
 export const SignupForm = () => {
 
     const dispatch = useDispatch()
 
+    const validate = (values:initialValues) => {
+        const errors = {} as initialValues;
+
+        if (!values.password) {
+            errors.password = 'Required';
+        } else if (values.password.length > 15) {
+            errors.password = 'Must be 15 characters or less';
+        }
+
+
+        if (!values.email) {
+            errors.email = 'Required';
+        } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+            errors.email = 'Invalid email address';
+        }
+
+        return errors;
+    };
+
     const formik = useFormik({
         initialValues: {
             email: '',
             password: '',
         },
+        validate,
         onSubmit: values => {
             dispatch(loginThunk(values.email, values.password))
         },
     });
 
-    // @ts-ignore
-    const login = useSelector<AppStateType, string>((state) => state.auth.login)
+
+    const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
 
     if(login) {
         return <Redirect to="/profile" />
@@ -60,12 +87,19 @@ export const SignupForm = () => {
                                 margin="normal"
                                 {...formik.getFieldProps('email')}
                             />
+
+                            {formik.touched.email && formik.errors.email ? (
+                               <Alert severity="error">{formik.errors.email}</Alert>
+                            ) : null}
                             <TextField
                                 type="password"
                                 label="Password"
                                 margin="normal"
                                 {...formik.getFieldProps('password')}
                             />
+                            {formik.touched.password && formik.errors.password ? (
+                                <Alert severity="error">{formik.errors.password}</Alert>
+                            ) : null}
                             <FormControlLabel
                                 label={'Remember me'}
                                 control={<Checkbox/>}

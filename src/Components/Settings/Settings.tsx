@@ -8,10 +8,13 @@ import Button from "@material-ui/core/Button";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import FormGroup from "@material-ui/core/FormGroup";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Card from "@material-ui/core/Card";
-import { updateProfileThunk} from "../../Reducers/Profile-reducer";
+import {updateProfileThunk} from "../../Reducers/Profile-reducer";
 import {ErrorSnackbar} from "../Utils/Error-Component";
+import {Redirect} from "react-router-dom";
+import {AppStateType} from "../../State/Store";
+import Alert from "@material-ui/lab/Alert";
 
 
 type contactsType = {
@@ -30,6 +33,28 @@ type valuesType = {
 export const Settings = () => {
 
     const dispatch = useDispatch()
+    const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
+
+    const validate = (values:valuesType) => {
+        const errors = {} as valuesType;
+
+        if (!values.aboutMe) {
+            errors.aboutMe = 'Required';
+        } else if (values.aboutMe.length > 15) {
+            errors.aboutMe = 'Must be 15 characters or less';
+        }
+
+
+       /* if (values.contacts.facebook === '') {
+            debugger
+            errors.contacts.facebook = 'Required';
+            console.log(errors.contacts.facebook)
+        } else if (/https?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*!/i.test(values.contacts.facebook)) {
+            errors.contacts.facebook = 'Invalid email address';
+        }*/
+
+        return errors;
+    };
 
     const formik = useFormik({
         initialValues: {
@@ -42,13 +67,17 @@ export const Settings = () => {
                 website: '',
             }
         },
-        onSubmit: (values:valuesType) => {
+        validate,
+        onSubmit: (values: valuesType) => {
             console.log(values)
             dispatch(updateProfileThunk(values))
             formik.resetForm()
         },
     });
 
+    if (!login) {
+        return <Redirect to="/login"/>
+    }
 
     return (
         <Grid container justify="center">
@@ -60,7 +89,13 @@ export const Settings = () => {
                             <h2>Change description</h2>
                         </FormLabel>
                         <Card
-                            style={{padding: '20px', marginBottom: '10px', borderRadius:'20px',backgroundColor:'#f3f2ef'}}
+                            style={{
+                                margin:'10px',
+                                padding: '20px',
+                                marginBottom: '10px',
+                                borderRadius: '20px',
+                                backgroundColor: '#f3f2ef'
+                            }}
                             elevation={2}>
                             <FormGroup>
                                 <FormControlLabel
@@ -74,14 +109,19 @@ export const Settings = () => {
                                     margin="normal"
                                     name="aboutMe"
                                     onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                     value={formik.values.aboutMe}
                                 />
+                                {formik.touched.aboutMe && formik.errors.aboutMe ? (
+                                    <Alert severity="error">{formik.errors.aboutMe}</Alert>
+                                ) : null}
                                 <TextField
                                     size='small'
                                     label="skills"
                                     margin="normal"
                                     name="lookingForAJobDescription"
                                     onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                     value={formik.values.lookingForAJobDescription}
                                 />
                                 <TextField
@@ -90,6 +130,7 @@ export const Settings = () => {
                                     margin="normal"
                                     name="fullName"
                                     onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                     value={formik.values.fullName}
                                 />
                                 <TextField
@@ -98,14 +139,17 @@ export const Settings = () => {
                                     margin="normal"
                                     name="contacts.github"
                                     onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                     value={formik.values.contacts.github}
                                 />
+
                                 <TextField
                                     size='small'
                                     label="facebook"
                                     margin="normal"
                                     name="contacts.facebook"
                                     onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                     value={formik.values.contacts.facebook}
                                 />
                                 <TextField
@@ -114,6 +158,7 @@ export const Settings = () => {
                                     margin="normal"
                                     name="contacts.website"
                                     onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
                                     value={formik.values.contacts.website}
                                 />
                                 <Button size={"medium"} type={'submit'} variant={'outlined'}

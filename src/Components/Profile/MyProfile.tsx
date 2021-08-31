@@ -100,7 +100,7 @@ export function MyProfile(props: propsType) {
                             <ListItemText
                                 primary=
                                     {userProfile.contacts?.github
-                                        ? <a href={'https://github.com/DemaJS'}>www.github.com</a>
+                                        ? <a href={userProfile.contacts.github}>www.github.com</a>
                                         : "GitHub"}
                             />
                         </ListItem>
@@ -124,7 +124,7 @@ export function MyProfile(props: propsType) {
                             </ListItemAvatar>
                             <ListItemText
                                 primary={userProfile.contacts?.github
-                                    ? <a href={'https://demajs.github.io/pet-project/'}>www.website.com</a>
+                                    ? <a href={userProfile.contacts.website}>www.website.com</a>
                                     : "WebSite"}
                             />
                         </ListItem>

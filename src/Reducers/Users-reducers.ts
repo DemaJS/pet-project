@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import axios from "axios";
-import {setErrorAC, setStatusAC} from "./App-reducer";
+import {setStatusAC} from "./App-reducer";
 
 type photosType = {
     small: string
@@ -113,7 +113,7 @@ export const setUsersThunk = (pageSize: number, currentPage: number) => {
 
 export const followUserThunk = (userId: number) => {
     return (dispatch: Dispatch) => {
-        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`,
+        axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`,{},
             {
                 withCredentials: true,
                 headers: {

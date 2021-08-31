@@ -55,11 +55,11 @@ export function User(props: propsType) {
                             </React.Fragment>
                         }
                     />
-                    <IconButton onClick={() => dispatch(unfollowUserThunk(props.id))}>
-                        <PersonAddDisabledIcon/>
-                    </IconButton>
-                    <IconButton onClick={() => dispatch(followUserThunk(props.id))}>
+                    <IconButton onClick={() => dispatch(followUserThunk(props.id))} disabled={props.followed}>
                         <PersonAddIcon/>
+                    </IconButton>
+                    <IconButton onClick={() => dispatch(unfollowUserThunk(props.id))} disabled={!props.followed}>
+                        <PersonAddDisabledIcon/>
                     </IconButton>
                 </ListItem>
                 <Divider variant="inset" component="li"/>

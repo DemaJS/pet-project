@@ -9,7 +9,6 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import {statusType} from "../../Reducers/App-reducer";
 import Grid from "@material-ui/core/Grid";
 import {Redirect} from "react-router-dom";
-import {ErrorSnackbar} from "../Utils/Error-Component";
 
 
 export function Users() {
@@ -31,13 +30,13 @@ export function Users() {
 
     const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
 
-    if(!login) {
-        return <Redirect to="/login" />
+    if (!login) {
+        return <Redirect to="/login"/>
     }
 
     const styleCard = {
-        backgroundColor:'#f3f2ef',
-        borderRadius:'15px',
+        backgroundColor: '#f3f2ef',
+        borderRadius: '15px',
         margin: '10px'
     }
 
@@ -45,17 +44,20 @@ export function Users() {
         <Grid item xs={12}>
             {loading === 'loading' && <LinearProgress/>}
 
-                <Pagination count={total} variant="outlined" shape="rounded" page={currentPage}
-                            onChange={handleChange} style={{padding: '10px'}}/>
+            <Pagination count={total} variant="outlined" shape="rounded" page={currentPage}
+                        onChange={handleChange} style={{padding: '10px'}}/>
 
-                <Card elevation={2} style={styleCard}>
-                    {
-                        users.map(el => {
-                            return <User name={el.name} status={el.status}
-                                         photo={el.photos.large} id={el.id} followed = {el.followed}/>
-                        })
-                    }
-                </Card>
+            <Card elevation={2} style={styleCard}>
+                {
+                    users.map(el => {
+                        return <User name={el.name} status={el.status}
+                                     photo={el.photos.large} id={el.id} followed={el.followed}/>
+                    })
+                }
+            </Card>
+
+            <Pagination count={total} variant="outlined" shape="rounded" page={currentPage}
+                        onChange={handleChange} style={{padding: '10px'}}/>
         </Grid>
     )
 }
