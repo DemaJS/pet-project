@@ -22,12 +22,16 @@ import Grid from "@material-ui/core/Grid";
 import {Settings} from "./Components/Settings/Settings";
 import {AppStateType} from "./State/Store";
 import {ToDo} from "./Components/ToDo/ToDo";
+import {Test} from "./Components/Test/Test";
+import LinearProgress from "@material-ui/core/LinearProgress";
+import {statusType} from "./Reducers/App-reducer";
 
 
 export function App() {
 
     const dispatch = useDispatch()
     const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
+    const loading = useSelector<AppStateType, statusType>(state => state.app.status)
 
     useEffect(() => {
         dispatch(setAuthThunk())
@@ -38,7 +42,11 @@ export function App() {
     }
 
     return (
+
         <Grid container style={{flexGrow: 1}}>
+
+            {loading === 'loading' && <LinearProgress/>}
+
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" style={{flexGrow: 1}}>
@@ -55,6 +63,9 @@ export function App() {
                             <IconButton><FormatListNumberedIcon/></IconButton>
                         </NavLink>
                         <NavLink to='/settings' style={{textDecoration: 'none'}}>
+                            <IconButton><SettingsIcon/></IconButton>
+                        </NavLink>
+                        <NavLink to='/test' style={{textDecoration: 'none'}}>
                             <IconButton><SettingsIcon/></IconButton>
                         </NavLink>
 
@@ -89,6 +100,7 @@ export function App() {
             <Route path="/users" render={() => <Users/>}/>
             <Route path="/login" render={() => <SignupForm/>}/>
             <Route path="/settings" render={() => <Settings/>}/>
+            <Route path="/test" render={() => <Test/>}/>
         </Grid>
     );
 }

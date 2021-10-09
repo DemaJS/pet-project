@@ -59,7 +59,7 @@ export const setProfileThunk = (userID: number) => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(response => {
             dispatch(setProfileAC(response.data))
@@ -74,7 +74,7 @@ export const updateProfileThunk = (profile: any) => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(response => {
             if (response.data.resultCode === 0) {

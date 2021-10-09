@@ -68,7 +68,7 @@ export const SignupForm = () => {
             <Grid item xs={12} lg={6}>
                     <img src={img} style={{maxWidth:'100%'}}/>
             </Grid>
-            <Grid item xs={12} lg={4}>
+            <Grid item>
                 <form onSubmit={formik.handleSubmit}>
                     <FormControl style={{marginLeft:'20px'}}>
                         <FormLabel>

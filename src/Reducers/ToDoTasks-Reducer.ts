@@ -112,7 +112,7 @@ export const setTasksThunk = (todoID: string) => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(response => {
             dispatch(setTasksAC(todoID, response.data.items))
@@ -129,7 +129,7 @@ export const addTaskThunk = (todoID: string, title: string) => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(response => {
             if (response.data.resultCode === 0) {
@@ -160,7 +160,7 @@ export const deleteTaskThunk = (todoID: string, taskID: string) => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(response => {
             if (response.data.resultCode === 0) {

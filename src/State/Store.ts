@@ -7,6 +7,7 @@ import thunk from 'redux-thunk';
 import {appReducer} from "../Reducers/App-reducer";
 import {authReducer} from "../Reducers/Auth-reducer";
 import {profileReducer} from "../Reducers/Profile-reducer";
+import {configureStore, MiddlewareArray} from "@reduxjs/toolkit";
 
 const rootReducer = combineReducers({
     counter: counterReducer,
@@ -20,7 +21,13 @@ const rootReducer = combineReducers({
 
 export type AppStateType = ReturnType<typeof rootReducer>
 
-export const store = createStore(rootReducer, applyMiddleware(thunk))
+/*export const store = createStore(rootReducer, applyMiddleware(thunk))*/
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: new MiddlewareArray().concat(thunk),
+})
+
+
 
 
 // @ts-ignore

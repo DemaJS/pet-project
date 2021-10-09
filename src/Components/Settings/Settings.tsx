@@ -36,7 +36,13 @@ export const Settings = () => {
     const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
 
     const validate = (values:valuesType) => {
+
         const errors = {} as valuesType;
+        errors.contacts = {
+            github: '',
+            facebook: '',
+            website: ''
+        };
 
         if (!values.aboutMe) {
             errors.aboutMe = 'Required';
@@ -45,13 +51,12 @@ export const Settings = () => {
         }
 
 
-       /* if (values.contacts.facebook === '') {
-            debugger
+        if (!values.contacts.facebook) {
             errors.contacts.facebook = 'Required';
             console.log(errors.contacts.facebook)
-        } else if (/https?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*!/i.test(values.contacts.facebook)) {
+        } else if (/https?:\/\/(?:[-\w]+\.)?([-\w]+)\.\w+(?:\.\w+)?\/?.*/i.test(values.contacts.facebook)) {
             errors.contacts.facebook = 'Invalid email address';
-        }*/
+        }
 
         return errors;
     };
@@ -152,6 +157,9 @@ export const Settings = () => {
                                     onBlur={formik.handleBlur}
                                     value={formik.values.contacts.facebook}
                                 />
+                                {formik.touched.contacts?.facebook && formik.errors.contacts?.facebook ? (
+                                    <Alert severity="error">{formik.errors.contacts.facebook}</Alert>
+                                ) : null}
                                 <TextField
                                     size='small'
                                     label="website"

@@ -1,10 +1,9 @@
 import {Dispatch} from "redux";
 import axios from "axios";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {setStatus} from "./App-reducer";
 
 
-type setAuthType = ReturnType<typeof setAuthAC>
-
-type actionType = setAuthType
 
 const initialState = {
     id: null as number | null,
@@ -15,34 +14,34 @@ const initialState = {
 
 type initialStateType = typeof initialState
 
-export const authReducer = (state: initialStateType = initialState, action: actionType): initialStateType => {
-    switch (action.type) {
-        case "SET_AUTH":
-            return {
-                ...state,
-                ...action.data
-            }
-        default:
-            return state
-    }
-}
+export const authSlice = createSlice({
+    name: 'auth',
+    initialState: initialState,
+    reducers: {
+        setAuth: (state:initialStateType, action: PayloadAction<{id: number, email: string, login: string, isAuth: boolean}>) => {
+            return {...action.payload}
+        }
+    },
+})
+
+export const authReducer = authSlice.reducer
+const {setAuth} = authSlice.actions
 
 
-export const setAuthAC = (id: number, email: string, login: string, isAuth: boolean) => {
-    return {type: 'SET_AUTH', data: {id, email, login, isAuth}} as const
-}
 
 export const setAuthThunk = () => {
     return async (dispatch: Dispatch) => {
+        dispatch(setStatus({status:'loading'}))
         const response = await axios.get(` https://social-network.samuraijs.com/api/1.0/auth/me`,
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             })
         const {id, email, login} = response.data.data
-        dispatch(setAuthAC(id, email, login, true))
+        dispatch(setAuth({id, email, login, isAuth:true}))
+        dispatch(setStatus({status:'succeeded'}))
     }
 }
 
@@ -52,7 +51,7 @@ export const loginThunk = (email:string, password:string) => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(response => {
                 if(response.data.resultCode === 0) {
@@ -69,12 +68,12 @@ export const logoutThunk = () => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(response => {
             if(response.data.resultCode === 0) {
                 // @ts-ignore
-                dispatch(setAuthAC(null,null,null,false))
+                dispatch(setAuth({id:null,email:null,login:null,isAuth:false}))
             }
         })
     }

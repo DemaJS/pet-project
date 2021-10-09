@@ -2,7 +2,7 @@ import {filterType, todoListsType} from "../Components/ToDo/ToDo";
 import {v1} from "uuid";
 import axios from "axios";
 import {Dispatch} from "redux";
-import {setErrorAC, setStatusAC} from "./App-reducer";
+import {setError, setErrorAC, setStatus, setStatusAC} from "./App-reducer";
 
 export type addToDoType = {
     type: 'ADD_TODO'
@@ -79,40 +79,40 @@ export const changeToDoStatusAC = (todoID: string, status: boolean) => {
 
 export const setToDoThunk = () => {
     return (dispatch: Dispatch) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setStatus({status:'loading'}))
         axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists',
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             })
             .then(res => {
                 dispatch(setToDoAC(res.data))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatus({status:'succeeded'}))
             })
     }
 }
 export const addToDoThunk = (title: string) => {
     return (dispatch: Dispatch) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setStatus({status:'loading'}))
         axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title},
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(addToDoAC(title))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatus({status:'succeeded'}))
             } else {
                 if (response.data.messages.length) {
-                    dispatch(setErrorAC(response.data.messages[0]))
+                    dispatch(setError({error:response.data.messages[0]}))
                 } else {
-                    dispatch(setErrorAC('Some error occurred'))
+                    dispatch(setError({error:'Some error occurred'}))
                 }
-                dispatch(setStatusAC('failed'))
+                dispatch(setStatus({status:'failed'}))
             }
 
         })
@@ -121,18 +121,18 @@ export const addToDoThunk = (title: string) => {
 
 export const deleteToDoThunk = (id: string) => {
     return (dispatch: Dispatch) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setStatus({status:'loading'}))
         dispatch(changeToDoStatusAC(id, true))
         axios.delete(`https://social-network.samuraijs.com/api/1.1//todo-lists/${id}`,
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }).then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(deleteToDoAC(id))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatus({status:'succeeded'}))
                 dispatch(changeToDoStatusAC(id, false))
             }
 

@@ -117,7 +117,7 @@ export const followUserThunk = (userId: number) => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }
         ).then((response) => {
@@ -134,7 +134,7 @@ export const unfollowUserThunk = (userId: number) => {
             {
                 withCredentials: true,
                 headers: {
-                    'api-key': 'c2e39203-417e-4936-90ba-36cd8b9b6c99'
+                    'api-key': 'c2b8cbaf-b19e-4763-b68e-015f5b7c7690'
                 }
             }
         ).then((response) => {
