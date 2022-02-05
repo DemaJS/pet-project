@@ -77,27 +77,3 @@ export const updateProfileThunk = (profile: any) => {
     }
   };
 };
-
-/* type setProfileType = ReturnType<typeof setProfileAC>;
-
-type actionType = setProfileType;
- */
-
-/* export const profileReducer = (
-  state: initialStateType = initialState,
-  action: actionType
-) => {
-  switch (action.type) {
-    case "SET_PROFILE":
-      return {
-        ...state,
-        profile: { ...action.profile },
-      };
-    default:
-      return state;
-  }
-};
-
-export const setProfileAC = (profile: profileType) => {
-  return { type: "SET_PROFILE", profile } as const;
-}; */

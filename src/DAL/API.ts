@@ -41,4 +41,13 @@ export const API = {
   updateProfile(profile: any) {
     return instance.put(`/profile`, { ...profile });
   },
+  setUsers(pageSize: number, currentPage: number) {
+    return instance.get(`/users?count=${pageSize}&page=${currentPage}`);
+  },
+  followUser(userId: number) {
+    return instance.post(`/follow/${userId}`, {});
+  },
+  unfollowUser(userId: number) {
+    return instance.delete(`/follow/${userId}`);
+  },
 };
