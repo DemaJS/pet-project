@@ -72,9 +72,7 @@ export const Settings = () => {
                 website: '',
             }
         },
-        validate,
         onSubmit: (values: valuesType) => {
-            console.log(values)
             dispatch(updateProfileThunk(values))
             formik.resetForm()
         },

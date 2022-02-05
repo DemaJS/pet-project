@@ -2,7 +2,8 @@ import {filterType, todoListsType} from "../Components/ToDo/ToDo";
 import {v1} from "uuid";
 import axios from "axios";
 import {Dispatch} from "redux";
-import {setError, setErrorAC, setStatus, setStatusAC} from "./App-reducer";
+import {setError, setStatus, statusType} from "./App-reducer";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type addToDoType = {
     type: 'ADD_TODO'
@@ -28,6 +29,37 @@ type actionType = addToDoType | deleteToDoType | filterTaskType | setToDoType | 
 
 
 const initialState: Array<todoListsType> = []
+
+
+/*export const toDoListsSlice = createSlice({
+    name: 'todoLists',
+    initialState: initialState,
+    reducers: {
+        setToDo: (state, action: PayloadAction<{ newArray: Array<todoListsType> }>) => {
+            return action.payload.newArray.map(el => ({...el, filter: 'all', entityStatus: false}))
+        },
+        addToDo: (state, action: PayloadAction<{ title: string }>) => {
+            state.push({id: v1(), title: action.payload.title, filter: 'all', entityStatus: false})
+        },
+        deleteToDo: (state, action:PayloadAction<{id:string}>) => {
+            const index = state.findIndex(el => el.id === action.payload.id)
+            if(index > -1) {
+                state.splice(index,1)
+            }
+        },
+        filterTasks: (state,action:PayloadAction<{todoID:string,filter: filterType}>) => {
+            const index = state.findIndex(el => el.id === action.payload.todoID)
+            state[index].filter = action.payload.filter
+        },
+        changeToDoStatus: (state,action:PayloadAction<{todoID: string, status: boolean}>) => {
+            const index = state.findIndex(el => el.id === action.payload.todoID)
+            state[index].entityStatus = action.payload.status
+        }
+     },
+})
+
+export const ToDoListsReducer = toDoListsSlice.reducer
+export const {setToDo,addToDo,deleteToDo,filterTasks,changeToDoStatus} = toDoListsSlice.actions*/
 
 export const ToDoListsReducer = (state: Array<todoListsType> = initialState, action: actionType) => {
     switch (action.type) {
@@ -79,7 +111,7 @@ export const changeToDoStatusAC = (todoID: string, status: boolean) => {
 
 export const setToDoThunk = () => {
     return (dispatch: Dispatch) => {
-        dispatch(setStatus({status:'loading'}))
+        dispatch(setStatus({status: 'loading'}))
         axios.get('https://social-network.samuraijs.com/api/1.1/todo-lists',
             {
                 withCredentials: true,
@@ -89,13 +121,13 @@ export const setToDoThunk = () => {
             })
             .then(res => {
                 dispatch(setToDoAC(res.data))
-                dispatch(setStatus({status:'succeeded'}))
+                dispatch(setStatus({status: 'succeeded'}))
             })
     }
 }
 export const addToDoThunk = (title: string) => {
     return (dispatch: Dispatch) => {
-        dispatch(setStatus({status:'loading'}))
+        dispatch(setStatus({status: 'loading'}))
         axios.post('https://social-network.samuraijs.com/api/1.1/todo-lists', {title},
             {
                 withCredentials: true,
@@ -105,14 +137,14 @@ export const addToDoThunk = (title: string) => {
             }).then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(addToDoAC(title))
-                dispatch(setStatus({status:'succeeded'}))
+                dispatch(setStatus({status: 'succeeded'}))
             } else {
                 if (response.data.messages.length) {
-                    dispatch(setError({error:response.data.messages[0]}))
+                    dispatch(setError({error: response.data.messages[0]}))
                 } else {
-                    dispatch(setError({error:'Some error occurred'}))
+                    dispatch(setError({error: 'Some error occurred'}))
                 }
-                dispatch(setStatus({status:'failed'}))
+                dispatch(setStatus({status: 'failed'}))
             }
 
         })
@@ -121,8 +153,8 @@ export const addToDoThunk = (title: string) => {
 
 export const deleteToDoThunk = (id: string) => {
     return (dispatch: Dispatch) => {
-        dispatch(setStatus({status:'loading'}))
-        dispatch(changeToDoStatusAC(id, true))
+        dispatch(setStatus({status: 'loading'}))
+        dispatch(changeToDoStatusAC(id,true))
         axios.delete(`https://social-network.samuraijs.com/api/1.1//todo-lists/${id}`,
             {
                 withCredentials: true,
@@ -132,8 +164,8 @@ export const deleteToDoThunk = (id: string) => {
             }).then(res => {
             if (res.data.resultCode === 0) {
                 dispatch(deleteToDoAC(id))
-                dispatch(setStatus({status:'succeeded'}))
-                dispatch(changeToDoStatusAC(id, false))
+                dispatch(setStatus({status: 'succeeded'}))
+                dispatch(changeToDoStatusAC(id,false))
             }
 
         })

@@ -14,7 +14,7 @@ import {setTasksThunk} from "../../Reducers/ToDoTasks-Reducer";
 import {useDispatch} from "react-redux";
 
 type propsType = {
-    filter:filterType
+    filter: filterType
     tasks: Array<taskType>
     title: string
     id: string
@@ -23,17 +23,17 @@ type propsType = {
     filterTask: (todoID: string, filter: filterType) => void
     changeCheckBox: (todoID: string, taskID: string, isDone: boolean) => void
     changeTaskName: (todoID: string, taskID: string, taskName: string) => void
-    deleteToDo:(id:string) => void
-    entityStatus:boolean
+    deleteToDo: (id: string) => void
+    entityStatus: boolean
 }
 
- export const ToDoList = React.memo((props: propsType) => {
+export const ToDoList = React.memo((props: propsType) => {
 
     const dispatch = useDispatch()
 
     useEffect(() => {
         dispatch(setTasksThunk(props.id))
-    },[dispatch])
+    }, [dispatch])
 
     const [taskName, setTaskName] = useState('')
     const [error, setError] = useState('')
@@ -44,7 +44,7 @@ type propsType = {
             setTaskName('')
             setError('')
         } else setError('Incorrect entry.')
-    },[ props.addTask,props.id,taskName])
+    }, [props.addTask, props.id, taskName])
 
     const taskOnChange = (e: ChangeEvent<HTMLInputElement>) => {
         setTaskName(e.currentTarget.value)
@@ -58,11 +58,11 @@ type propsType = {
         filterTasks = filterTasks.filter(t => t.isDone)
     }
 
-     const styleCard = {
-         backgroundColor:'#f3f2ef',
-         borderRadius:'15px',
-         padding:'10px'
-     }
+    const styleCard = {
+        backgroundColor: '#f3f2ef',
+        borderRadius: '15px',
+        padding: '10px'
+    }
 
     return (
         <Paper elevation={3} style={styleCard}>
@@ -90,7 +90,7 @@ type propsType = {
 
             {
                 filterTasks.map(el => {
-
+                    debugger
                     let onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
                         props.changeCheckBox(props.id, el.id, e.currentTarget.checked)
                     }

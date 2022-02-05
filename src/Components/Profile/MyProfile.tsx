@@ -38,9 +38,8 @@ export function MyProfile(props: propsType) {
         props.id ? dispatch(setProfileThunk(+props.id)) : dispatch(setProfileThunk(meID))
     }, [props.id, meID])
 
-    const userName = useSelector<AppStateType, string>((state) => state.profile.profile.fullName)
-    const userProfile = useSelector<AppStateType, profileType>((state) => state.profile.profile)
-
+    const userProfile = useSelector<AppStateType, any>((state) => state.profile.profile)
+    
     return (
 
         <Grid container spacing={2}>
@@ -56,7 +55,7 @@ export function MyProfile(props: propsType) {
                                     ? userProfile.photos?.large
                                     : ava}/>
                         }
-                        title={userName}
+                        title={userProfile.fullName}
                         subheader={userProfile.aboutMe}
                     />
                     <CardContent>
@@ -67,6 +66,7 @@ export function MyProfile(props: propsType) {
                                 <CreateIcon/>
                             </IconButton>
                         </Typography>
+                    
                         <Typography>
                             <div style={{display: 'flex'}}>
                                 <WorkOutlineIcon/>

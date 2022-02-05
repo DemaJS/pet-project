@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import axios from "axios";
-import {setStatusAC} from "./App-reducer";
+import {setStatus} from "./App-reducer";
 
 type photosType = {
     small: string
@@ -94,7 +94,7 @@ export const unfollowUserAC = (userId: number) => {
 
 export const setUsersThunk = (pageSize: number, currentPage: number) => {
     return (dispatch: Dispatch) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setStatus({status:'loading'}))
         axios.get(` https://social-network.samuraijs.com/api/1.0/users?count=${pageSize}&page=${currentPage}`,
             {
                 withCredentials: true,
@@ -106,7 +106,7 @@ export const setUsersThunk = (pageSize: number, currentPage: number) => {
                 dispatch(setUsersAC(response.data.items))
                 dispatch(setTotalAC(response.data.totalCount))
                 dispatch(setCurrentPageAC(currentPage))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatus({status:'succeeded'}))
             })
     }
 }

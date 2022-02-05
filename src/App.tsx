@@ -65,10 +65,10 @@ export function App() {
                         <NavLink to='/settings' style={{textDecoration: 'none'}}>
                             <IconButton><SettingsIcon/></IconButton>
                         </NavLink>
-                        <NavLink to='/test' style={{textDecoration: 'none'}}>
+                        {/*<NavLink to='/test' style={{textDecoration: 'none'}}>
                             <IconButton><SettingsIcon/></IconButton>
                         </NavLink>
-
+*/}
                     </Typography>
                     {
                         login

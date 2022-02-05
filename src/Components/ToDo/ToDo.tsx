@@ -6,8 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "../../State/Store";
 import {
     addToDoThunk,
-    deleteToDoThunk,
-    filterTaskAC,
+    deleteToDoThunk, filterTaskAC,
     setToDoThunk
 } from "../../Reducers/ToDoLists-Reducer";
 import {
@@ -32,7 +31,7 @@ export type taskType = {
     id: string
     title: string
     isDone: boolean
-    entityStatusTask:boolean
+    entityStatusTask: boolean
 }
 export type tasksType = {
     [key: string]: Array<taskType>
@@ -41,9 +40,9 @@ export type filterType = 'all' | 'active' | 'completed'
 
 export function ToDo() {
 
-    const todoLists = useSelector<AppStateType,Array<todoListsType>>(state => state.lists)
-    const tasks = useSelector<AppStateType,tasksType>(state => state.tasks)
-    const loading = useSelector<AppStateType,statusType>(state => state.app.status)
+    const todoLists = useSelector<AppStateType, Array<todoListsType>>(state => state.lists)
+    const tasks = useSelector<AppStateType, tasksType>(state => state.tasks)
+    const loading = useSelector<AppStateType, statusType>(state => state.app.status)
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -52,41 +51,41 @@ export function ToDo() {
 
     const addToDo = useCallback((title: string) => {
         dispatch(addToDoThunk(title))
-    },[dispatch])
+    }, [dispatch])
 
-    const deleteToDo = useCallback( (id: string) => {
+    const deleteToDo = useCallback((id: string) => {
         dispatch(deleteToDoThunk(id))
-    },[dispatch])
+    }, [dispatch])
 
     const addTask = useCallback((todoID: string, taskName: string) => {
-        dispatch(addTaskThunk(todoID,taskName))
-    },[dispatch])
+        dispatch(addTaskThunk(todoID, taskName))
+    }, [dispatch])
 
     const deleteTask = useCallback((todoID: string, taskID: string) => {
-        dispatch(deleteTaskThunk(todoID,taskID))
+        dispatch(deleteTaskThunk(todoID, taskID))
     }, [dispatch])
 
     const filterTask = useCallback((todoID: string, filter: filterType) => {
-        dispatch(filterTaskAC(todoID,filter))
-    },[dispatch])
+        dispatch(filterTaskAC(todoID, filter))
+    }, [dispatch])
 
     const changeCheckBox = useCallback((todoID: string, taskID: string, isDone: boolean) => {
-        dispatch(changeCheckBoxAC(todoID,taskID,isDone))
-    },[dispatch])
+        dispatch(changeCheckBoxAC(todoID, taskID, isDone))
+    }, [dispatch])
 
     const changeTaskName = useCallback((todoID: string, taskID: string, taskName: string) => {
-        dispatch(changeTaskNameAC(todoID,taskID,taskName))
-    },[dispatch])
+        dispatch(changeTaskNameAC(todoID, taskID, taskName))
+    }, [dispatch])
 
     const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
 
-    if(!login) {
-        return <Redirect to="/login" />
+    if (!login) {
+        return <Redirect to="/login"/>
     }
 
     return (
 
-        <div style={{margin:'30px'}}>
+        <div style={{margin: '30px'}}>
             {loading === 'loading' && <LinearProgress/>}
 
             <ErrorSnackbar/>
@@ -107,7 +106,7 @@ export function ToDo() {
                                         tasks={tasks[el.id]}
                                         title={el.title}
                                         id={el.id}
-                                        entityStatus = {el.entityStatus}
+                                        entityStatus={el.entityStatus}
                                         addTask={addTask}
                                         deleteTask={deleteTask}
                                         filterTask={filterTask}

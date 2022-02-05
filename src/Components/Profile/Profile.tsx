@@ -6,15 +6,16 @@ import {Redirect, useParams} from 'react-router-dom';
 import {useSelector} from "react-redux";
 import {AppStateType} from "../../State/Store";
 
+
 type paramsType = {
-    userID:string
+    userID: string
 }
 
 export function Profile() {
 
     const {userID} = useParams<paramsType>()
-
     const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
+
 
     if (!login) {
         return <Redirect to="/login"/>

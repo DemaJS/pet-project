@@ -3,7 +3,7 @@ import {v1} from "uuid";
 import {addToDoType, setToDoType} from "./ToDoLists-Reducer";
 import axios from "axios";
 import {Dispatch} from "redux";
-import {setErrorAC, setStatusAC} from "./App-reducer";
+import {setError, setStatus} from "./App-reducer";
 
 
 type addTaskType = ReturnType<typeof addTaskAC>
@@ -124,7 +124,7 @@ export const setTasksThunk = (todoID: string) => {
 export const addTaskThunk = (todoID: string, title: string) => {
 
     return (dispatch: Dispatch) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setStatus({status:'loading'}))
         axios.post(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todoID}/tasks`, {title},
             {
                 withCredentials: true,
@@ -134,27 +134,27 @@ export const addTaskThunk = (todoID: string, title: string) => {
             }).then(response => {
             if (response.data.resultCode === 0) {
                 dispatch(addTaskAC(todoID, title))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatus({status:'succeeded'}))
             } else {
 
                     if (response.data.messages.length) {
-                        dispatch(setErrorAC(response.data.messages[0]))
+                        dispatch(setError({error:response.data.messages[0]}))
                     } else {
-                        dispatch(setErrorAC('Some error occurred'))
+                        dispatch(setError({error:'Some error occurred'}))
                     }
-                    dispatch(setStatusAC('failed'))
+                    dispatch(setStatus({status:'failed'}))
             }
         })
             .catch(error => {
-                dispatch(setErrorAC(error.message))
-                dispatch(setStatusAC('failed'))
+                dispatch(setError({error:error.message}))
+                dispatch(setStatus({status:'failed'}))
             })
     }
 }
 
 export const deleteTaskThunk = (todoID: string, taskID: string) => {
     return (dispatch: Dispatch) => {
-        dispatch(setStatusAC('loading'))
+        dispatch(setStatus({status:'loading'}))
         dispatch(changeTaskStatusAC(todoID,taskID,true))
         axios.delete(`https://social-network.samuraijs.com/api/1.1/todo-lists/${todoID}/tasks/${taskID}`,
             {
@@ -166,7 +166,7 @@ export const deleteTaskThunk = (todoID: string, taskID: string) => {
             if (response.data.resultCode === 0) {
                 dispatch(deleteTaskAC(todoID, taskID))
                 dispatch(changeTaskStatusAC(todoID,taskID,false))
-                dispatch(setStatusAC('succeeded'))
+                dispatch(setStatus({status:'succeeded'}))
             }
         })
     }
