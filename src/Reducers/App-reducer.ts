@@ -13,11 +13,8 @@ export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setStatus: (
-      state: initialStateType,
-      action: PayloadAction<{ status: statusType }>
-    ) => {
-      state.status = action.payload.status;
+    setStatus: (state: initialStateType, action: PayloadAction<statusType>) => {
+      state.status = action.payload;
     },
     setError: (
       state: initialStateType,

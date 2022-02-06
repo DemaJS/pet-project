@@ -17,7 +17,6 @@ import {
 } from "../../Reducers/ToDoTasks-Reducer";
 import {statusType} from "../../Reducers/App-reducer";
 import {ErrorSnackbar} from "../Utils/Error-Component";
-import {Redirect} from "react-router-dom";
 import {ToDoList} from "./ToDo-List";
 
 
@@ -77,12 +76,7 @@ export function ToDo() {
         dispatch(changeTaskNameAC(todoID, taskID, taskName))
     }, [dispatch])
 
-    const login = useSelector<AppStateType, string | null>((state) => state.auth.login)
-
-    if (!login) {
-        return <Redirect to="/login"/>
-    }
-
+   
     return (
 
         <div style={{margin: '30px'}}>

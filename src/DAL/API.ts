@@ -1,53 +1,62 @@
 import axios from "axios";
 
-const instance = axios.create({
+const networkAPI = axios.create({
   baseURL: "https://social-network.samuraijs.com/api/1.0",
   withCredentials: true,
   headers: {
-    "API-KEY": "c2e39203-417e-4936-90ba-36cd8b9b6c99",
+    "API-KEY": "c2b8cbaf-b19e-4763-b68e-015f5b7c7690",
+  },
+});
+
+const toDolistAPI = axios.create({
+  baseURL: "https://social-network.samuraijs.com/api/1.1",
+  withCredentials: true,
+  headers: {
+    "API-KEY": "c2b8cbaf-b19e-4763-b68e-015f5b7c7690",
   },
 });
 
 export const API = {
   setAuth() {
-    return instance.get("/auth/me");
+    return networkAPI.get("/auth/me");
   },
   login(email: string, password: string) {
-    return axios.post(
-      "https://social-network.samuraijs.com/api/1.1/auth/login",
-      { email, password },
-      {
-        withCredentials: true,
-        headers: {
-          "api-key": "c2b8cbaf-b19e-4763-b68e-015f5b7c7690",
-        },
-      }
-    );
+    return toDolistAPI.post("/auth/login", { email, password });
   },
   logout() {
-    return axios.delete(
-      "https://social-network.samuraijs.com/api/1.1/auth/login",
-      {
-        withCredentials: true,
-        headers: {
-          "api-key": "c2b8cbaf-b19e-4763-b68e-015f5b7c7690",
-        },
-      }
-    );
+    return toDolistAPI.delete("/auth/login");
   },
   setProfile(userID: number) {
-    return instance.get(`/profile/${userID}`);
+    return networkAPI.get(`/profile/${userID}`);
   },
   updateProfile(profile: any) {
-    return instance.put(`/profile`, { ...profile });
+    return networkAPI.put(`/profile`, { ...profile });
   },
   setUsers(pageSize: number, currentPage: number) {
-    return instance.get(`/users?count=${pageSize}&page=${currentPage}`);
+    return networkAPI.get(`/users?count=${pageSize}&page=${currentPage}`);
   },
   followUser(userId: number) {
-    return instance.post(`/follow/${userId}`, {});
+    return networkAPI.post(`/follow/${userId}`, {});
   },
   unfollowUser(userId: number) {
-    return instance.delete(`/follow/${userId}`);
+    return networkAPI.delete(`/follow/${userId}`);
+  },
+  setToDo() {
+    return toDolistAPI.get("/todo-lists");
+  },
+  addToDo(title: string) {
+    return toDolistAPI.post("/todo-lists", { title });
+  },
+  deleteToDo(id: string) {
+    return toDolistAPI.delete(`/todo-lists/${id}`);
+  },
+  setTask(todoID: string) {
+    return toDolistAPI.get(`/todo-lists/${todoID}/tasks`);
+  },
+  addTask(todoID: string, title: string) {
+    return toDolistAPI.post(`/todo-lists/${todoID}/tasks`, { title });
+  },
+  deleteTask(todoID: string, taskID: string) {
+    return toDolistAPI.delete(`/todo-lists/${todoID}/tasks/${taskID}`);
   },
 };

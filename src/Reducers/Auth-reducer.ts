@@ -4,10 +4,12 @@ import { setStatus, setError } from "./App-reducer";
 import { API } from "../DAL/API";
 
 const initialState = {
-  id: null as number | null,
-  email: null as string | null,
-  login: null as string | null,
-  isAuth: false,
+  isAuth: {
+    id: null as number | null,
+    email: null as string | null,
+    login: null as string | null,
+    isAuth: false,
+  },
 };
 
 type initialStateType = typeof initialState;
@@ -17,7 +19,7 @@ export const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     setAuth: (state: initialStateType, action: PayloadAction<any>) => {
-      return { ...action.payload };
+      state.isAuth = action.payload;
     },
   },
 });
@@ -27,11 +29,11 @@ const { setAuth } = authSlice.actions;
 
 export const setAuthThunk = () => {
   return async (dispatch: Dispatch) => {
-    dispatch(setStatus({ status: "loading" }));
+    dispatch(setStatus("loading"));
     const response = await API.setAuth();
     const { id, email, login } = response.data.data;
     dispatch(setAuth({ id, email, login, isAuth: true }));
-    dispatch(setStatus({ status: "succeeded" }));
+    dispatch(setStatus("succeeded"));
   };
 };
 

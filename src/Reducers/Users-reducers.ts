@@ -69,13 +69,13 @@ export const { setUsers, setTotal, setCurrentPage, followUser, unFollowUser } =
 
 export const setUsersThunk = (pageSize: number, currentPage: number) => {
   return async (dispatch: Dispatch) => {
-    dispatch(setStatus({ status: "loading" }));
+    dispatch(setStatus("loading"));
     try {
       const response = await API.setUsers(pageSize, currentPage);
       dispatch(setUsers(response.data.items));
       dispatch(setTotal(response.data.totalCount));
       dispatch(setCurrentPage(currentPage));
-      dispatch(setStatus({ status: "succeeded" }));
+      dispatch(setStatus("succeeded"));
     } catch (error: any) {
       dispatch(setError(error));
     }

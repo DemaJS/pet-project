@@ -29,21 +29,18 @@ export type profileType = {
 };
 
 type StateType = {
-  profile: profileType | {};
+  profile: profileType;
 };
 
 const initialState: StateType = {
-  profile: {},
+  profile: {} as profileType,
 };
 
 export const appSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
-    setProfile: (
-      state: StateType,
-      action: PayloadAction<{ profile: profileType }>
-    ) => {
+    setProfile: (state: StateType, action: PayloadAction<profileType>) => {
       state.profile = action.payload;
     },
   },
@@ -73,7 +70,7 @@ export const updateProfileThunk = (profile: any) => {
       }
     } catch (error: any) {
       dispatch(setError(error));
-      dispatch(setStatus({ status: "failed" }));
+      dispatch(setStatus("failed"));
     }
   };
 };

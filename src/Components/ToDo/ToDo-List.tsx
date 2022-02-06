@@ -90,7 +90,6 @@ export const ToDoList = React.memo((props: propsType) => {
 
             {
                 filterTasks.map(el => {
-                    debugger
                     let onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
                         props.changeCheckBox(props.id, el.id, e.currentTarget.checked)
                     }
