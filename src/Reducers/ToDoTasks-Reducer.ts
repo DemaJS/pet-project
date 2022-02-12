@@ -1,10 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { tasksType } from "../Components/ToDo/ToDo";
 import { v1 } from "uuid";
 import { Dispatch } from "redux";
 import { setError, setStatus } from "./App-reducer";
 import { API } from "../DAL/API";
 import { setToDo, addToDo } from "../Reducers/ToDoLists-Reducer";
+
+export type taskType = {
+  id: string;
+  title: string;
+  isDone: boolean;
+  entityStatusTask: boolean;
+};
+export type tasksType = {
+  [key: string]: Array<taskType>;
+};
 
 const initialState: tasksType = {};
 

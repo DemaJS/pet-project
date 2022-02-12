@@ -10,7 +10,7 @@ import FormGroup from "@material-ui/core/FormGroup";
 import { useDispatch } from "react-redux";
 import Card from "@material-ui/core/Card";
 import { updateProfileThunk } from "../../Reducers/Profile-reducer";
-import { ErrorSnackbar } from "../Utils/Error-Component";
+import { ErrorSnackbar } from "../../Utils/Error-Component";
 import Alert from "@material-ui/lab/Alert";
 
 type contactsType = {

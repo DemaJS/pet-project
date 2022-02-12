@@ -9,33 +9,19 @@ import {
   deleteToDoThunk,
   setToDoThunk,
   filterTasks,
+  todoListsType,
+  filterType,
 } from "../../Reducers/ToDoLists-Reducer";
 import {
   addTaskThunk,
   changeCheckBoxAC,
   changeTaskNameAC,
   deleteTaskThunk,
+  tasksType,
 } from "../../Reducers/ToDoTasks-Reducer";
 import { statusType } from "../../Reducers/App-reducer";
-import { ErrorSnackbar } from "../Utils/Error-Component";
+import { ErrorSnackbar } from "../../Utils/Error-Component";
 import { ToDoList } from "./ToDo-List";
-
-export type todoListsType = {
-  id: string;
-  title: string;
-  filter: filterType;
-  entityStatus: boolean;
-};
-export type taskType = {
-  id: string;
-  title: string;
-  isDone: boolean;
-  entityStatusTask: boolean;
-};
-export type tasksType = {
-  [key: string]: Array<taskType>;
-};
-export type filterType = "all" | "active" | "completed";
 
 export function ToDo() {
   const todoLists = useSelector<AppStateType, Array<todoListsType>>(

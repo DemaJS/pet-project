@@ -1,5 +1,4 @@
 import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { filterType, taskType } from "./ToDo";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Checkbox from "@material-ui/core/Checkbox";
@@ -10,8 +9,9 @@ import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import Delete from "@material-ui/icons/Delete";
 import { EditableSpan } from "./Editable-Span";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
-import { setTasksThunk } from "../../Reducers/ToDoTasks-Reducer";
+import { setTasksThunk, taskType } from "../../Reducers/ToDoTasks-Reducer";
 import { useDispatch } from "react-redux";
+import { filterType } from "../../Reducers/ToDoLists-Reducer";
 
 type propsType = {
   filter: filterType;

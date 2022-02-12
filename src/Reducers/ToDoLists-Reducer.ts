@@ -1,8 +1,16 @@
-import { filterType, todoListsType } from "../Components/ToDo/ToDo";
 import { Dispatch } from "redux";
 import { setError, setStatus } from "./App-reducer";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { API } from "../DAL/API";
+
+export type todoListsType = {
+  id: string;
+  title: string;
+  filter: filterType;
+  entityStatus: boolean;
+};
+
+export type filterType = "all" | "active" | "completed";
 
 const initialState: Array<todoListsType> = [];
 
