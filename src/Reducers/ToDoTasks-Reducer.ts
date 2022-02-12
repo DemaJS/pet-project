@@ -27,9 +27,11 @@ export const toDoTasksSlice = createSlice({
       ];
     },
     deleteTaskAC: (state, action: PayloadAction<any>) => {
-      state[action.payload.todoID] = state[action.payload.todoID].filter(
-        (el) => el.id !== action.payload.taskID
-      );
+      const tasks = state[action.payload.todolistId];
+      const index = tasks.findIndex((el) => el.id === action.payload.taskId);
+      if (index > -1) {
+        tasks.splice(index, 1);
+      }
     },
     changeCheckBoxAC: (state, action: PayloadAction<any>) => {
       return {
