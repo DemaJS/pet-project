@@ -1,136 +1,91 @@
-import { tasksType, taskType } from "../Components/ToDo/ToDo";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { tasksType } from "../Components/ToDo/ToDo";
 import { v1 } from "uuid";
-import { addToDoType, setToDoType } from "./ToDoLists-Reducer";
 import { Dispatch } from "redux";
 import { setError, setStatus } from "./App-reducer";
 import { API } from "../DAL/API";
 import { setToDo, addToDo } from "../Reducers/ToDoLists-Reducer";
 
-type addTaskType = ReturnType<typeof addTaskAC>;
-type deleteTaskType = ReturnType<typeof deleteTaskAC>;
-type changeCheckBoxType = ReturnType<typeof changeCheckBoxAC>;
-type changeTaskNameType = ReturnType<typeof changeTaskNameAC>;
-type setTasksType = ReturnType<typeof setTasksAC>;
-type changeTaskStatusType = ReturnType<typeof changeTaskStatusAC>;
-
-type actionType =
-  | addTaskType
-  | deleteTaskType
-  | changeCheckBoxType
-  | changeTaskNameType
-  | addToDoType
-  | setToDoType
-  | setTasksType
-  | changeTaskStatusType;
-
 const initialState: tasksType = {};
 
-export const ToDoTaskReducer = (
-  state: tasksType = initialState,
-  action: any
-) => {
-  switch (action.type) {
-    case "SET_TASKS":
-      const stateCopy2 = { ...state };
-      stateCopy2[action.todoID] = action.tasks;
-      return stateCopy2;
-
-    case setToDo.type:
-      const stateCopy = { ...state };
-      action.payload.newArray.forEach((el: any) => {
-        stateCopy[el.id] = [];
-      });
-      return stateCopy;
-
-    case "ADD_TASK":
-      state[action.todoID] = [
+export const toDoTasksSlice = createSlice({
+  name: "todoTasks",
+  initialState: initialState,
+  reducers: {
+    setTasksAC: (state, action: PayloadAction<any>) => {
+      state[action.payload.todoID] = action.payload.tasks;
+    },
+    addTaskAC: (state, action: PayloadAction<any>) => {
+      state[action.payload.todoID] = [
         {
           id: v1(),
-          title: action.taskName,
+          title: action.payload.taskName,
           isDone: false,
           entityStatusTask: false,
         },
-        ...state[action.todoID],
+        ...state[action.payload.todoID],
       ];
-      return { ...state };
-
-    case "DELETE_TASK":
-      const newTasks = state[action.todoID];
-      state[action.todoID] = newTasks.filter((el) => el.id !== action.taskID);
-      return { ...state };
-
-    case "CHANGE_CHECK_BOX":
+    },
+    deleteTaskAC: (state, action: PayloadAction<any>) => {
+      state[action.payload.todoID] = state[action.payload.todoID].filter(
+        (el) => el.id !== action.payload.taskID
+      );
+    },
+    changeCheckBoxAC: (state, action: PayloadAction<any>) => {
       return {
-        ...state,
-        [action.todoID]: state[action.todoID].map((el) => {
-          if (el.id === action.taskID) {
-            return { ...el, isDone: action.isDone };
+        [action.payload.todoID]: state[action.payload.todoID].map((el) => {
+          if (el.id === action.payload.taskID) {
+            return { ...el, isDone: action.payload.isDone };
           } else return el;
         }),
       };
-
-    case "CHANGE_TASK_NAME":
+    },
+    changeTaskNameAC: (state, action: PayloadAction<any>) => {
       return {
-        ...state,
-        [action.todoID]: state[action.todoID].map((el) => {
-          if (el.id === action.taskID) {
-            return { ...el, title: action.taskName };
+        [action.payload.todoID]: state[action.payload.todoID].map((el) => {
+          if (el.id === action.payload.taskID) {
+            return { ...el, title: action.payload.taskName };
           } else return el;
         }),
       };
-
-    case addToDo.type:
-      return { ...state, [action.payload.id]: [] };
-
-    case "CHANGE_TASK_STATUS":
+    },
+    changeTaskStatusAC: (state, action: PayloadAction<any>) => {
       return {
-        ...state,
-        [action.todoID]: state[action.todoID].map((el) => {
-          if (el.id === action.taskID) {
-            return { ...el, entityStatusTask: action.status };
+        [action.payload.todoID]: state[action.payload.todoID].map((el) => {
+          if (el.id === action.payload.taskID) {
+            return { ...el, entityStatusTask: action.payload.status };
           } else return el;
         }),
       };
-    default:
-      return state;
-  }
-};
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(setToDo, (state, action) => {
+        action.payload.newArray.forEach((el: any) => {
+          state[el.id] = [];
+        });
+      })
+      .addCase(addToDo, (state, action) => {
+        state[action.payload.todolist.id] = [];
+      });
+  },
+});
 
-export const setTasksAC = (todoID: string, tasks: Array<taskType>) => {
-  return { type: "SET_TASKS", todoID, tasks } as const;
-};
-export const addTaskAC = (todoID: string, taskName: string) => {
-  return { type: "ADD_TASK", todoID, taskName } as const;
-};
-export const deleteTaskAC = (todoID: string, taskID: string) => {
-  return { type: "DELETE_TASK", todoID, taskID } as const;
-};
-export const changeCheckBoxAC = (
-  todoID: string,
-  taskID: string,
-  isDone: boolean
-) => {
-  return { type: "CHANGE_CHECK_BOX", todoID, taskID, isDone } as const;
-};
-export const changeTaskNameAC = (
-  todoID: string,
-  taskID: string,
-  taskName: string
-) => {
-  return { type: "CHANGE_TASK_NAME", todoID, taskID, taskName } as const;
-};
-export const changeTaskStatusAC = (
-  todoID: string,
-  taskID: string,
-  status: boolean
-) => {
-  return { type: "CHANGE_TASK_STATUS", todoID, taskID, status } as const;
-};
+export const ToDoTaskReducer = toDoTasksSlice.reducer;
+export const {
+  setTasksAC,
+  addTaskAC,
+  deleteTaskAC,
+  changeCheckBoxAC,
+  changeTaskNameAC,
+  changeTaskStatusAC,
+} = toDoTasksSlice.actions;
 
 export const setTasksThunk = (todoID: string) => {
   return (dispatch: Dispatch) => {
     API.setTask(todoID).then((response) => {
-      dispatch(setTasksAC(todoID, response.data.items));
+      dispatch(setTasksAC({ todoID, tasks: response.data.items }));
     });
   };
 };
@@ -142,7 +97,7 @@ export const addTaskThunk = (todoID: string, title: string) => {
     API.addTask(todoID, title)
       .then((response) => {
         if (response.data.resultCode === 0) {
-          dispatch(addTaskAC(todoID, title));
+          dispatch(addTaskAC({ todoID, taskName: title }));
           dispatch(setStatus("succeeded"));
         } else {
           if (response.data.messages.length) {
@@ -163,12 +118,12 @@ export const addTaskThunk = (todoID: string, title: string) => {
 export const deleteTaskThunk = (todoID: string, taskID: string) => {
   return (dispatch: Dispatch) => {
     dispatch(setStatus("loading"));
-    dispatch(changeTaskStatusAC(todoID, taskID, true));
+    dispatch(changeTaskStatusAC({ todoID, taskID, status: true }));
 
     API.deleteTask(todoID, taskID).then((response) => {
       if (response.data.resultCode === 0) {
-        dispatch(deleteTaskAC(todoID, taskID));
-        dispatch(changeTaskStatusAC(todoID, taskID, false));
+        dispatch(deleteTaskAC({ todoID, taskID }));
+        dispatch(changeTaskStatusAC({ todoID, taskID, status: false }));
         dispatch(setStatus("succeeded"));
       }
     });

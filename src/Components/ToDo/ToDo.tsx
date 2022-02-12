@@ -88,14 +88,14 @@ export function ToDo() {
 
   const changeCheckBox = useCallback(
     (todoID: string, taskID: string, isDone: boolean) => {
-      dispatch(changeCheckBoxAC(todoID, taskID, isDone));
+      dispatch(changeCheckBoxAC({ todoID, taskID, isDone }));
     },
     [dispatch]
   );
 
   const changeTaskName = useCallback(
     (todoID: string, taskID: string, taskName: string) => {
-      dispatch(changeTaskNameAC(todoID, taskID, taskName));
+      dispatch(changeTaskNameAC({ todoID, taskID, taskName }));
     },
     [dispatch]
   );
