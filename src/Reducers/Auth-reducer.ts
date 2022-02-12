@@ -4,12 +4,10 @@ import { setStatus, setError } from "./App-reducer";
 import { API } from "../DAL/API";
 
 const initialState = {
-  isAuth: {
-    id: null as number | null,
-    email: null as string | null,
-    login: null as string | null,
-    isAuth: false,
-  },
+  id: null as number | null,
+  email: null as string | null,
+  login: null as string | null,
+  isAuth: false,
 };
 
 type initialStateType = typeof initialState;
@@ -19,7 +17,7 @@ export const authSlice = createSlice({
   initialState: initialState,
   reducers: {
     setAuth: (state: initialStateType, action: PayloadAction<any>) => {
-      state.isAuth = action.payload;
+      return { ...action.payload };
     },
   },
 });

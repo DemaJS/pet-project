@@ -23,48 +23,69 @@ export type setToDoType = {
   type: "SET_TODO";
   newArray: Array<todoListsType>;
 };
-type changeToDoStatusType = ReturnType<typeof changeToDoStatusAC>;
+/* type changeToDoStatusType = ReturnType<typeof changeToDoStatusAC>; */
 
-type actionType =
+/* type actionType =
   | addToDoType
   | deleteToDoType
   | filterTaskType
   | setToDoType
-  | changeToDoStatusType;
+  | changeToDoStatusType; */
 
 const initialState: Array<todoListsType> = [];
 
-/*export const toDoListsSlice = createSlice({
-    name: 'todoLists',
-    initialState: initialState,
-    reducers: {
-        setToDo: (state, action: PayloadAction<{ newArray: Array<todoListsType> }>) => {
-            return action.payload.newArray.map(el => ({...el, filter: 'all', entityStatus: false}))
-        },
-        addToDo: (state, action: PayloadAction<{ title: string }>) => {
-            state.push({id: v1(), title: action.payload.title, filter: 'all', entityStatus: false})
-        },
-        deleteToDo: (state, action:PayloadAction<{id:string}>) => {
-            const index = state.findIndex(el => el.id === action.payload.id)
-            if(index > -1) {
-                state.splice(index,1)
-            }
-        },
-        filterTasks: (state,action:PayloadAction<{todoID:string,filter: filterType}>) => {
-            const index = state.findIndex(el => el.id === action.payload.todoID)
-            state[index].filter = action.payload.filter
-        },
-        changeToDoStatus: (state,action:PayloadAction<{todoID: string, status: boolean}>) => {
-            const index = state.findIndex(el => el.id === action.payload.todoID)
-            state[index].entityStatus = action.payload.status
-        }
-     },
-})
+export const toDoListsSlice = createSlice({
+  name: "todoLists",
+  initialState: initialState,
+  reducers: {
+    setToDo: (
+      state,
+      action: PayloadAction<{ newArray: Array<todoListsType> }>
+    ) => {
+      return action.payload.newArray.map((el) => ({
+        ...el,
+        filter: "all",
+        entityStatus: false,
+      }));
+    },
+    addToDo: (state, action: PayloadAction<string>) => {
+      state.push({
+        id: v1(),
+        title: action.payload,
+        filter: "all",
+        entityStatus: false,
+      });
+    },
+    deleteToDo: (state, action: PayloadAction<{ id: string }>) => {
+      const index = state.findIndex((el) => el.id === action.payload.id);
+      if (index > -1) {
+        state.splice(index, 1);
+      }
+    },
+    filterTasks: (
+      state,
+      action: PayloadAction<{ todoID: string; filter: filterType }>
+    ) => {
+      const index = state.findIndex((el) => el.id === action.payload.todoID);
+      state[index].filter = action.payload.filter;
+    },
+    changeToDoStatus: (
+      state,
+      action: PayloadAction<{ todoID: string; status: boolean }>
+    ) => {
+      const index = state.findIndex((el) => el.id === action.payload.todoID);
+      if (index > -1) {
+        state[index].entityStatus = action.payload.status;
+      }
+    },
+  },
+});
 
-export const ToDoListsReducer = toDoListsSlice.reducer
-export const {setToDo,addToDo,deleteToDo,filterTasks,changeToDoStatus} = toDoListsSlice.actions*/
+export const ToDoListsReducer = toDoListsSlice.reducer;
+export const { setToDo, addToDo, deleteToDo, filterTasks, changeToDoStatus } =
+  toDoListsSlice.actions;
 
-export const ToDoListsReducer = (
+/* export const ToDoListsReducer1 = (
   state: Array<todoListsType> = initialState,
   action: actionType
 ) => {
@@ -113,7 +134,7 @@ export const addToDoAC = (title: string): addToDoType => {
 export const deleteToDoAC = (id: string): deleteToDoType => {
   return { type: "DELETE_TODO", id };
 };
-export const filterTaskAC = (
+export const filterTaskAAC = (
   todoID: string,
   filter: filterType
 ): filterTaskType => {
@@ -121,13 +142,13 @@ export const filterTaskAC = (
 };
 export const changeToDoStatusAC = (todoID: string, status: boolean) => {
   return { type: "CHANGE_TODO_STATUS", todoID, status } as const;
-};
+}; */
 
 export const setToDoThunk = () => {
   return (dispatch: Dispatch) => {
     dispatch(setStatus("loading"));
     API.setToDo().then((res) => {
-      dispatch(setToDoAC(res.data));
+      dispatch(setToDo({ newArray: res.data }));
       dispatch(setStatus("succeeded"));
     });
   };
@@ -137,7 +158,7 @@ export const addToDoThunk = (title: string) => {
     dispatch(setStatus("loading"));
     API.addToDo(title).then((response) => {
       if (response.data.resultCode === 0) {
-        dispatch(addToDoAC(title));
+        dispatch(addToDo(title));
         dispatch(setStatus("succeeded"));
       } else {
         if (response.data.messages.length) {
@@ -154,12 +175,12 @@ export const addToDoThunk = (title: string) => {
 export const deleteToDoThunk = (id: string) => {
   return (dispatch: Dispatch) => {
     dispatch(setStatus("loading"));
-    dispatch(changeToDoStatusAC(id, true));
+    dispatch(changeToDoStatus({ todoID: id, status: true }));
     API.deleteToDo(id).then((res) => {
       if (res.data.resultCode === 0) {
-        dispatch(deleteToDoAC(id));
+        dispatch(deleteToDo({ id }));
         dispatch(setStatus("succeeded"));
-        dispatch(changeToDoStatusAC(id, false));
+        dispatch(changeToDoStatus({ todoID: id, status: false }));
       }
     });
   };

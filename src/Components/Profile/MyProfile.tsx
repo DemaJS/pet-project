@@ -30,9 +30,7 @@ type propsType = {
 };
 
 export function MyProfile(props: propsType) {
-  const meID = useSelector<AppStateType, number>(
-    (state) => state.auth.isAuth.id!
-  );
+  const meID = useSelector<AppStateType, number>((state) => state.auth.id!);
   const dispatch = useDispatch();
 
   useEffect(() => {

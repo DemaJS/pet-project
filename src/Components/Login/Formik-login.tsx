@@ -54,13 +54,13 @@ export const SignupForm = () => {
     },
   });
 
-  const login = useSelector<AppStateType, string | null>(
-    (state) => state.auth.isAuth.login
+  const isAuth = useSelector<AppStateType, boolean>(
+    (state) => state.auth.isAuth
   );
 
-  if (login) {
+  /*   if (isAuth) {
     return <Redirect to="/profile" />;
-  }
+  } */
 
   return (
     <Grid container justify="center" spacing={2}>

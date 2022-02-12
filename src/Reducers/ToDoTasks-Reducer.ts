@@ -4,6 +4,7 @@ import { addToDoType, setToDoType } from "./ToDoLists-Reducer";
 import { Dispatch } from "redux";
 import { setError, setStatus } from "./App-reducer";
 import { API } from "../DAL/API";
+import { setToDo, addToDo } from "../Reducers/ToDoLists-Reducer";
 
 type addTaskType = ReturnType<typeof addTaskAC>;
 type deleteTaskType = ReturnType<typeof deleteTaskAC>;
@@ -26,7 +27,7 @@ const initialState: tasksType = {};
 
 export const ToDoTaskReducer = (
   state: tasksType = initialState,
-  action: actionType
+  action: any
 ) => {
   switch (action.type) {
     case "SET_TASKS":
@@ -34,9 +35,9 @@ export const ToDoTaskReducer = (
       stateCopy2[action.todoID] = action.tasks;
       return stateCopy2;
 
-    case "SET_TODO":
+    case setToDo.type:
       const stateCopy = { ...state };
-      action.newArray.forEach((el) => {
+      action.payload.newArray.forEach((el: any) => {
         stateCopy[el.id] = [];
       });
       return stateCopy;
@@ -78,8 +79,8 @@ export const ToDoTaskReducer = (
         }),
       };
 
-    case "ADD_TODO":
-      return { ...state, [action.id]: [] };
+    case addToDo.type:
+      return { ...state, [action.payload.id]: [] };
 
     case "CHANGE_TASK_STATUS":
       return {

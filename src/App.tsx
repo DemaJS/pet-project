@@ -5,26 +5,17 @@ import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import IconButton from "@material-ui/core/IconButton";
 import { NavLink, Route } from "react-router-dom";
-import AlarmIcon from "@material-ui/icons/Alarm";
-import GroupAddIcon from "@material-ui/icons/GroupAdd";
-import PersonIcon from "@material-ui/icons/Person";
-import FormatListNumberedIcon from "@material-ui/icons/FormatListNumbered";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import VpnKeyIcon from "@material-ui/icons/VpnKey";
-import SettingsIcon from "@material-ui/icons/Settings";
-import { Counter } from "./Components/Counter/Counter";
-import { Profile } from "./Components/Profile/Profile";
-import { Users } from "./Components/Users/Users";
 import { SignupForm } from "./Components/Login/Formik-login";
 import { logoutThunk, setAuthThunk } from "./Reducers/Auth-reducer";
 import { useDispatch, useSelector } from "react-redux";
 import Grid from "@material-ui/core/Grid";
-import { Settings } from "./Components/Settings/Settings";
 import { AppStateType } from "./State/Store";
-import { ToDo } from "./Components/ToDo/ToDo";
-import { Test } from "./Components/Test/Test";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { statusType } from "./Reducers/App-reducer";
+import { routes } from "./Navigation/Routes";
+import { navlinks } from "./Navigation/NavLinks";
 
 export function App() {
   const dispatch = useDispatch();
@@ -51,37 +42,17 @@ export function App() {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" style={{ flexGrow: 1 }}>
-            <NavLink to="/counter" style={{ textDecoration: "none" }}>
-              <IconButton>
-                <AlarmIcon />
-              </IconButton>
-            </NavLink>
-            <NavLink to="/users" style={{ textDecoration: "none" }}>
-              <IconButton>
-                <GroupAddIcon />
-              </IconButton>
-            </NavLink>
-            <NavLink to="/profile" style={{ textDecoration: "none" }}>
-              <IconButton>
-                <PersonIcon />
-              </IconButton>
-            </NavLink>
-            <NavLink to="/todo" style={{ textDecoration: "none" }}>
-              <IconButton>
-                <FormatListNumberedIcon />
-              </IconButton>
-            </NavLink>
-            <NavLink to="/settings" style={{ textDecoration: "none" }}>
-              <IconButton>
-                <SettingsIcon />
-              </IconButton>
-            </NavLink>
-            {/*<NavLink to='/test' style={{textDecoration: 'none'}}>
-                            <IconButton><SettingsIcon/></IconButton>
-                        </NavLink>
-*/}
+            {navlinks.map((el) => {
+              return (
+                <NavLink to={el.path} style={{ textDecoration: "none" }}>
+                  <IconButton>
+                    <el.icon />
+                  </IconButton>
+                </NavLink>
+              );
+            })}
           </Typography>
-          {isAuth.isAuth.login ? (
+          {isAuth.login ? (
             <>
               <Button
                 onClick={logoutHandle}
@@ -105,13 +76,9 @@ export function App() {
           )}
         </Toolbar>
       </AppBar>
-      <Route path="/counter" render={() => <Counter />} />
-      <Route path="/todo" render={() => <ToDo />} />
-      <Route path="/profile/:userID?" render={() => <Profile />} />
-      <Route path="/users" render={() => <Users />} />
-      <Route path="/login" render={() => <SignupForm />} />
-      <Route path="/settings" render={() => <Settings />} />
-      <Route path="/test" render={() => <Test />} />
+      {routes.map((el) => {
+        return <Route path={el.path} render={() => <el.component />} />;
+      })}
     </Grid>
   );
 }
